@@ -1,9 +1,13 @@
 package cl.duoc.speedfast;
 
+import cl.duoc.speedfast.config.ConexionBD;
 import cl.duoc.speedfast.controller.ControladorPrincipal;
 import cl.duoc.speedfast.view.VentanaPrincipal;
 
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 public class Main {
 
@@ -13,5 +17,16 @@ public class Main {
             new ControladorPrincipal(ventanaPrincipal);
             ventanaPrincipal.setVisible(true);
         });
+
+        DatabaseMetaData DatabaseConnection;
+        try (Connection connection = ConexionBD.obtenerConexion()) {
+            if (connection != null) {
+                System.out.println("Conexión a la base de datos establecida correctamente.");
+            } else {
+                System.out.println("No se pudo establecer la conexión a la base de datos.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión a la base de datos: " + e.getMessage());
+        }
     }
 }
