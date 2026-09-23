@@ -10,8 +10,9 @@ import static cl.duoc.speedfast.model.entity.EstadoPedido.ENTREGADO;
 
 public class Repartidor implements Runnable {
 
+    private int idRepartidor;
     private final String nombreRepartidor;
-    private final ControladorPedidos controladorPedidos;
+    private ControladorPedidos controladorPedidos;
 
     public Repartidor(String nombreRepartidor, ControladorPedidos controladorPedidos) {
         if (nombreRepartidor == null || nombreRepartidor.isEmpty()) {
@@ -22,6 +23,23 @@ public class Repartidor implements Runnable {
         }
         this.nombreRepartidor = nombreRepartidor;
         this.controladorPedidos = controladorPedidos;
+    }
+
+    public Repartidor(int idRepartidor, String nombreRepartidor) {
+        this.idRepartidor = idRepartidor;
+        this.nombreRepartidor = nombreRepartidor;
+    }
+
+    public int getIdRepartidor() {
+        return idRepartidor;
+    }
+
+    public String getNombreRepartidor() {
+        return nombreRepartidor;
+    }
+
+    public void setIdRepartidor(int idRepartidor) {
+        this.idRepartidor = idRepartidor;
     }
 
     @Override
