@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.controller;
 
-import cl.duoc.speedfast.model.Pedido;
+import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.view.VentanaListaPedidos;
 import cl.duoc.speedfast.view.VentanaPrincipal;
 import cl.duoc.speedfast.view.VentanaRegistroPedido;

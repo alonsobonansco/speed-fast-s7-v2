@@ -1,4 +1,4 @@
-package cl.duoc.speedfast.model;
+package cl.duoc.speedfast.model.entity;
 
 public abstract class Pedido implements Cancelable {
 

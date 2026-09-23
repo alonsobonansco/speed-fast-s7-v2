@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.view;
 
-import cl.duoc.speedfast.model.Pedido;
+import cl.duoc.speedfast.model.entity.Pedido;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

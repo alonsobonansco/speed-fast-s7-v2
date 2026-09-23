@@ -1,12 +1,12 @@
 package cl.duoc.speedfast.service;
 
 import cl.duoc.speedfast.controller.ControladorPedidos;
-import cl.duoc.speedfast.model.Pedido;
+import cl.duoc.speedfast.model.entity.Pedido;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import static cl.duoc.speedfast.model.EstadoPedido.ENTREGADO;
+import static cl.duoc.speedfast.model.entity.EstadoPedido.ENTREGADO;
 
 public class Repartidor implements Runnable {
 

@@ -1,9 +1,9 @@
 package cl.duoc.speedfast.controller;
 
-import cl.duoc.speedfast.model.Pedido;
-import cl.duoc.speedfast.model.PedidoComida;
-import cl.duoc.speedfast.model.PedidoEncomienda;
-import cl.duoc.speedfast.model.PedidoExpress;
+import cl.duoc.speedfast.model.entity.Pedido;
+import cl.duoc.speedfast.model.entity.PedidoComida;
+import cl.duoc.speedfast.model.entity.PedidoEncomienda;
+import cl.duoc.speedfast.model.entity.PedidoExpress;
 import cl.duoc.speedfast.view.VentanaRegistroPedido;
 
 import java.util.List;

@@ -1,9 +1,9 @@
 package cl.duoc.speedfast.controller;
 
-import cl.duoc.speedfast.model.EstadoPedido;
-import cl.duoc.speedfast.model.Pedido;
-import cl.duoc.speedfast.model.PedidoEncomienda;
-import cl.duoc.speedfast.model.PedidoExpress;
+import cl.duoc.speedfast.model.entity.EstadoPedido;
+import cl.duoc.speedfast.model.entity.Pedido;
+import cl.duoc.speedfast.model.entity.PedidoEncomienda;
+import cl.duoc.speedfast.model.entity.PedidoExpress;
 import cl.duoc.speedfast.event.LogListener;
 import cl.duoc.speedfast.service.Repartidor;
 
