@@ -10,6 +10,15 @@ import java.util.List;
 public class RepartidorDAO {
 
     public void guardar(Repartidor repartidor) throws SQLException {
+        String sql = "INSERT INTO repartidor (nombre) VALUES (?)";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, repartidor.getNombreRepartidor());
+
+            pstmt.executeUpdate();
+        }
 
     }
 
