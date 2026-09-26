@@ -1,11 +1,17 @@
 package cl.duoc.speedfast.model.dao;
 
 import cl.duoc.speedfast.config.ConexionBD;
+import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
+import cl.duoc.speedfast.model.entity.TipoPedido;
+import cl.duoc.speedfast.service.Repartidor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PedidoDAO {
 
@@ -21,5 +27,32 @@ public class PedidoDAO {
 
             pstmt.executeUpdate();
         }
+    }
+
+    public List<Pedido> listarTodos() throws SQLException {
+        List<Pedido> listaPedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String textoTipo = rs.getString("tipo");
+                String textoEstado = rs.getString("estado");
+
+                TipoPedido tipoPedido = TipoPedido.valueOf(textoTipo.toUpperCase());
+                EstadoPedido estadoPedido = EstadoPedido.valueOf(textoEstado.toUpperCase());
+
+                Pedido pedido = new Pedido(rs.getInt("id"),
+                        rs.getString("direccion"),
+                        tipoPedido);
+
+                pedido.setEstadoPedido(estadoPedido);
+                listaPedidos.add(pedido);
+            }
+        }
+
+        return listaPedidos;
     }
 }

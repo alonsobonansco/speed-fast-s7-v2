@@ -1,31 +1,33 @@
 package cl.duoc.speedfast.controller;
 
+import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.entity.Pedido;
-import cl.duoc.speedfast.view.VentanaListaPedidos;
-import cl.duoc.speedfast.view.VentanaPrincipal;
-import cl.duoc.speedfast.view.VentanaRegistroPedido;
+import cl.duoc.speedfast.view.*;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ControladorPrincipal {
 
     private final VentanaPrincipal ventanaPrincipal;
-    private final List<Pedido> listaPedidos;
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
+
     private VentanaRegistroPedido ventanaRegistroPedido = null;
     private VentanaListaPedidos ventanaListaPedidos = null;
+    private VentanaListaRepartidores ventanaListaRepartidores = null;
+    private VentanaRegistroRepartidor ventanaRegistroRepartidor = null;
 
     public ControladorPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
-        this.listaPedidos = new ArrayList<>();
 
         inicializarListeners();
     }
 
     private void inicializarListeners() {
-        ventanaPrincipal.addRegistrarPedidoListener(e -> ejecutarRegistroPedido());
-        ventanaPrincipal.addListarPedidosListener(e -> ejecutarListarPedidos());
-        ventanaPrincipal.addIniciarEntregasListener(e -> ejecutarIniciarEntregas());
+        ventanaPrincipal.addRegistrarPedidoMenuListener(e -> ejecutarRegistroPedido());
+        ventanaPrincipal.addListarPedidosMenuListener(e -> ejecutarListarPedidos());
+        ventanaPrincipal.addRegistrarRepartidorMenuListener(e -> ejecutarRegistroRepartidor());
+        ventanaPrincipal.addListarRepartidoresMenuListener(e -> ejecutarListarRepartidores());
     }
 
     private void ejecutarRegistroPedido() {
@@ -33,9 +35,10 @@ public class ControladorPrincipal {
         if (ventanaRegistroPedido == null || !ventanaRegistroPedido.isDisplayable()) {
             ventanaRegistroPedido = new VentanaRegistroPedido();
 
-            new ControladorRegistro(ventanaRegistroPedido, listaPedidos);
+            new ControladorRegistroPedido(ventanaRegistroPedido);
 
             ventanaRegistroPedido.setVisible(true);
+
         } else {
             ventanaRegistroPedido.toFront();
             ventanaRegistroPedido.requestFocus();
@@ -47,17 +50,49 @@ public class ControladorPrincipal {
             ventanaListaPedidos = new VentanaListaPedidos();
         }
 
-        new ControladorLista(ventanaListaPedidos, listaPedidos);
+        new ControladorListaPedidos(ventanaListaPedidos);
 
         ventanaListaPedidos.setVisible(true);
         ventanaListaPedidos.toFront();
         ventanaListaPedidos.requestFocus();
     }
 
+    private void ejecutarRegistroRepartidor() {
+        if (ventanaRegistroRepartidor == null || !ventanaRegistroRepartidor.isDisplayable()) {
+            ventanaRegistroRepartidor = new VentanaRegistroRepartidor();
+        }
+
+        new ControladorRegistroRepartidor(ventanaRegistroRepartidor);
+
+        ventanaRegistroRepartidor.setVisible(true);
+        ventanaRegistroRepartidor.toFront();
+        ventanaRegistroRepartidor.requestFocus();
+    }
+
+    private void ejecutarListarRepartidores() {
+        if (ventanaListaRepartidores == null || !ventanaListaRepartidores.isDisplayable()) {
+            ventanaListaRepartidores = new VentanaListaRepartidores();
+        }
+
+        new ControladorListaRepartidores(ventanaListaRepartidores);
+
+        ventanaListaRepartidores.setVisible(true);
+        ventanaListaRepartidores.toFront();
+        ventanaListaRepartidores.requestFocus();
+    }
+
     private void ejecutarIniciarEntregas() {
         ventanaPrincipal.clearLog();
         ControladorPedidos controladorPedidos = new ControladorPedidos();
         controladorPedidos.setLogListener(ventanaPrincipal::appendLog);
-        controladorPedidos.iniciarSimulacionReparto(listaPedidos);
+
+        try {
+            List<Pedido> pedidosBD = pedidoDAO.listarTodos();
+            controladorPedidos.iniciarSimulacionReparto(pedidosBD);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            ventanaPrincipal.appendLog("No se pudo iniciar la simulación. Error de lectura en MySQL.");
+        }
     }
 }

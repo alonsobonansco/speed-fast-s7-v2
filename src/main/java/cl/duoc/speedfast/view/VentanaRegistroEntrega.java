@@ -21,23 +21,48 @@ public class VentanaRegistroEntrega extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 2, 10, 20));
-        ((JPanel)getContentPane()).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         pedidoJComboBox = new JComboBox<>();
         repartidorJComboBox = new JComboBox<>();
         guardarButton = new JButton("Asignar Entrega");
         atrasButton = new JButton("Atrás");
 
-        add(new JLabel("Seleccionar Pedido:")); add(pedidoJComboBox);
-        add(new JLabel("Seleccionar Repartidor:")); add(repartidorJComboBox);
-        add(guardarButton); add(atrasButton);
+        add(new JLabel("Seleccionar Pedido:"));
+        add(pedidoJComboBox);
+        add(new JLabel("Seleccionar Repartidor:"));
+        add(repartidorJComboBox);
+        add(guardarButton);
+        add(atrasButton);
     }
 
-    public JComboBox<Pedido> getComboPedidos() { return pedidoJComboBox; }
-    public JComboBox<Repartidor> getComboRepartidores() { return repartidorJComboBox; }
-    public void addGuardarListener(ActionListener l) { guardarButton.addActionListener(l); }
-    public void addVolverListener(ActionListener l) { atrasButton.addActionListener(l); }
-    public void cerrarVentana() { this.dispose(); }
+    public JComboBox<Pedido> getComboPedidos() {
+        return pedidoJComboBox;
+    }
+
+    public JComboBox<Repartidor> getComboRepartidores() {
+        return repartidorJComboBox;
+    }
+
+    public void addGuardarListener(ActionListener l) {
+        guardarButton.addActionListener(l);
+    }
+
+    public void addVolverAtrasListener(ActionListener l) {
+        atrasButton.addActionListener(l);
+    }
+
+    public void cerrarVentana() {
+        this.dispose();
+    }
+
+    public void mostrarMensajeConfirmacion(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Entrega registrada", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void mostrarMensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Métodos para llenar los combos de forma fácil desde el controlador
     public void cargarPedidos(List<Pedido> pedidos) {

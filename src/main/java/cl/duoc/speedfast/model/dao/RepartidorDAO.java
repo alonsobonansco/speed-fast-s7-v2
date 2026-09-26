@@ -9,6 +9,10 @@ import java.util.List;
 
 public class RepartidorDAO {
 
+    public void guardar(Repartidor repartidor) throws SQLException {
+
+    }
+
     public List<Repartidor> listarTodos() throws SQLException {
         List<Repartidor> listaRepartidores = new ArrayList<>();
         String sql = "SELECT * FROM repartidor";

@@ -2,8 +2,6 @@ package cl.duoc.speedfast.controller;
 
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
-import cl.duoc.speedfast.model.entity.PedidoEncomienda;
-import cl.duoc.speedfast.model.entity.PedidoExpress;
 import cl.duoc.speedfast.event.LogListener;
 import cl.duoc.speedfast.service.Repartidor;
 
@@ -30,7 +28,7 @@ public class ControladorPedidos {
 
         pedidosPendientes.clear();
 
-        for (Pedido pedido : listaPedidos) {
+        /*for (Pedido pedido : listaPedidos) {
             if (pedido.getEstadoPedido() == EstadoPedido.PENDIENTE) {
 
                 if (pedido.validarPedido()) {
@@ -48,7 +46,7 @@ public class ControladorPedidos {
                     escribirMensaje("[RECHAZADO] Pedido #" + pedido.getIdPedido() + ". Motivo: " + motivo);
                 }
             }
-        }
+        }*/
 
         if (pedidosPendientes.isEmpty()) {
             escribirMensaje("[AVISO] No quedan pedidos pendientes por entregar.");
