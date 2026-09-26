@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RepartidorDAO {
 
-    public List<Repartidor> listarTodos() {
+    public List<Repartidor> listarTodos() throws SQLException {
         List<Repartidor> listaRepartidores = new ArrayList<>();
         String sql = "SELECT * FROM repartidor";
 
@@ -20,12 +20,9 @@ public class RepartidorDAO {
             while (rs.next()) {
                 listaRepartidores.add(
                         new Repartidor(
-                        rs.getInt("id"),
-                        rs.getString("nombre")));
+                                rs.getInt("id"),
+                                rs.getString("nombre")));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return listaRepartidores;

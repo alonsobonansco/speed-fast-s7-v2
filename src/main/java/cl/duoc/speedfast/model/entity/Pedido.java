@@ -18,7 +18,7 @@ public abstract class Pedido implements Cancelable {
         setDireccionEntrega(direccionEntrega);
     }
 
-    @Override
+    /*@Override
     public void cancelar() {
         if (!pedidoActivo) {
             return;
@@ -26,7 +26,7 @@ public abstract class Pedido implements Cancelable {
 
         pedidoActivo = false;
         estadoPedido = EstadoPedido.CANCELADO;
-    }
+    }*/
 
     public abstract boolean validarPedido();
 

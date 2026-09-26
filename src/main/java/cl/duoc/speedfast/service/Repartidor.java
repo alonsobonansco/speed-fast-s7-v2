@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import static cl.duoc.speedfast.model.entity.EstadoPedido.ENTREGADO;
+import static cl.duoc.speedfast.model.entity.EstadoPedido.EN_REPARTO;
 
 public class Repartidor implements Runnable {
 
@@ -54,6 +55,8 @@ public class Repartidor implements Runnable {
             try {
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
                 controladorPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
+
+                pedido.setEstadoPedido(EN_REPARTO);
 
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
 
