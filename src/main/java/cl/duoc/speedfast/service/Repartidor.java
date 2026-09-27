@@ -11,8 +11,8 @@ import static cl.duoc.speedfast.model.entity.EstadoPedido.EN_REPARTO;
 
 public class Repartidor implements Runnable {
 
-    private int idRepartidor;
     private final String nombreRepartidor;
+    private int idRepartidor;
     private ControladorPedidos controladorPedidos;
 
     public Repartidor(String nombreRepartidor, ControladorPedidos controladorPedidos) {
@@ -35,12 +35,12 @@ public class Repartidor implements Runnable {
         return idRepartidor;
     }
 
-    public String getNombreRepartidor() {
-        return nombreRepartidor;
-    }
-
     public void setIdRepartidor(int idRepartidor) {
         this.idRepartidor = idRepartidor;
+    }
+
+    public String getNombreRepartidor() {
+        return nombreRepartidor;
     }
 
     @Override
@@ -67,6 +67,8 @@ public class Repartidor implements Runnable {
                 pedido.setEstadoPedido(ENTREGADO);
 
                 controladorPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
+
+                controladorPedidos.registrarEntregaEnBD(pedido, this.nombreRepartidor);
 
             } catch (InterruptedException e) {
                 controladorPedidos.escribirMensaje("Entrega interrumpida");

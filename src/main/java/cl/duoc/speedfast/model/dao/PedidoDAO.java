@@ -4,7 +4,6 @@ import cl.duoc.speedfast.config.ConexionBD;
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.model.entity.TipoPedido;
-import cl.duoc.speedfast.service.Repartidor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,5 +81,18 @@ public class PedidoDAO {
         }
 
         return listaPendientes;
+    }
+
+    public void actualizarEstado(int idPedido, EstadoPedido nuevoEstado) throws SQLException {
+        String sql = "UPDATE pedido SET estado = ? WHERE id = ?";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nuevoEstado.name());
+            pstmt.setInt(2, idPedido);
+
+            pstmt.executeUpdate();
+        }
     }
 }

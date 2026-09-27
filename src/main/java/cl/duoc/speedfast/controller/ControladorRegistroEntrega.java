@@ -4,6 +4,7 @@ import cl.duoc.speedfast.model.dao.EntregaDAO;
 import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
 import cl.duoc.speedfast.model.entity.Entrega;
+import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.service.Repartidor;
 import cl.duoc.speedfast.view.VentanaRegistroEntrega;
@@ -59,6 +60,10 @@ public class ControladorRegistroEntrega {
 
 
             entregaDAO.guardar(nuevaEntrega);
+
+            pedidoDAO.actualizarEstado(pedidoSelec.getIdPedido(), EstadoPedido.EN_REPARTO);
+
+            ventanaRegistroEntrega.getComboPedidos().removeItem(pedidoSelec);
 
             ventanaRegistroEntrega.mostrarMensajeConfirmacion("Entrega registrada con éxito en la Base de Datos");
             ventanaRegistroEntrega.cerrarVentana();

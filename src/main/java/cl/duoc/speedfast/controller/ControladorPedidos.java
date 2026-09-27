@@ -1,10 +1,12 @@
 package cl.duoc.speedfast.controller;
 
+import cl.duoc.speedfast.event.LogListener;
+import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
-import cl.duoc.speedfast.event.LogListener;
 import cl.duoc.speedfast.service.Repartidor;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
@@ -13,12 +15,25 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ControladorPedidos {
 
     private final BlockingQueue<Pedido> pedidosPendientes = new LinkedBlockingQueue<>();
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
     private LogListener logListener;
     private int repartidoresActivos = 0;
+
+    public synchronized void registrarEntregaEnBD(Pedido pedido, String nombreRepartidor) {
+        try {
+            pedidoDAO.actualizarEstado(pedido.getIdPedido(), EstadoPedido.ENTREGADO);
+            escribirMensaje("[ENTREGADO] Pedido #" + pedido.getIdPedido() + " entregado por repartidor [" + nombreRepartidor + "]");
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            escribirMensaje("[ERROR] Error al registrar la entrega en la base de datos: " + ex.getMessage());
+        }
+    }
 
     public void setLogListener(LogListener logListener) {
         this.logListener = logListener;
     }
+
 
     public void iniciarSimulacionReparto(List<Pedido> listaPedidos) {
         if (listaPedidos == null || listaPedidos.isEmpty()) {
