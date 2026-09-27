@@ -63,7 +63,7 @@ public class Pedido implements Cancelable {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return "Pedido #" + idPedido + " - " + direccionEntrega;
     }
 }

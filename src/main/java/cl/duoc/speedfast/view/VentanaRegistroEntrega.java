@@ -52,21 +52,25 @@ public class VentanaRegistroEntrega extends JFrame {
 
         Font fuenteCampos = new Font("Arial", Font.PLAIN, 14);
 
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         JLabel pedidoLabel = new JLabel("Seleccionar Pedido:");
         pedidoLabel.setFont(fuenteCampos);
         panelFormulario.add(pedidoLabel, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         pedidoJComboBox.setFont(fuenteCampos);
         panelFormulario.add(pedidoJComboBox, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         JLabel repartidorLabel = new JLabel("Seleccionar Repartidor:");
         repartidorLabel.setFont(fuenteCampos);
         panelFormulario.add(repartidorLabel, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         repartidorJComboBox.setFont(fuenteCampos);
         panelFormulario.add(repartidorJComboBox, gbc);
 

@@ -42,20 +42,20 @@ public class ControladorRegistroEntrega {
 
     public void procesarAsignacion() {
         try {
-        Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
-        Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
+            Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
+            Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
 
-        if (pedidoSelec == null || repartidorSelec == null) {
-            ventanaRegistroEntrega.mostrarMensajeError("Debe seleccionar un pedido y un repartidor obligatoriamente.");
-            return;
-        }
+            if (pedidoSelec == null || repartidorSelec == null) {
+                ventanaRegistroEntrega.mostrarMensajeError("Debe seleccionar un pedido y un repartidor obligatoriamente.");
+                return;
+            }
 
-        Entrega nuevaEntrega = new Entrega(
-                pedidoSelec.getIdPedido(),
-                repartidorSelec.getIdRepartidor(),
-                LocalDate.now(),
-                LocalTime.now()
-        );
+            Entrega nuevaEntrega = new Entrega(
+                    pedidoSelec.getIdPedido(),
+                    repartidorSelec.getIdRepartidor(),
+                    LocalDate.now(),
+                    LocalTime.now()
+            );
 
 
             entregaDAO.guardar(nuevaEntrega);

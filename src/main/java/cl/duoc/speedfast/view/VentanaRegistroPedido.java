@@ -49,21 +49,25 @@ public class VentanaRegistroPedido extends JFrame {
 
         Font fuenteCampos = new Font("Arial", Font.PLAIN, 14);
 
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         JLabel direccionLabel = new JLabel("Dirección de Entrega:");
         direccionLabel.setFont(fuenteCampos);
         panelFormulario.add(direccionLabel, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 0;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         direccionTextField.setFont(fuenteCampos);
         panelFormulario.add(direccionTextField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         JLabel tipoLabel = new JLabel("Tipo de Pedido:");
         tipoLabel.setFont(fuenteCampos);
         panelFormulario.add(tipoLabel, gbc);
 
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         tipoComboBox.setFont(fuenteCampos);
         panelFormulario.add(tipoComboBox, gbc);
 

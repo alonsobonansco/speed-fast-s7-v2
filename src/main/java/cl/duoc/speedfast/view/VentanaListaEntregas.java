@@ -72,11 +72,11 @@ public class VentanaListaEntregas extends JFrame {
 
         for (Entrega e : listaEntregas) {
             Object[] fila = {
-                e.getIdEntrega(),
-                e.getIdPedido(),
-                e.getIdRepartidor(),
-                e.getFecha(),
-                e.getHora()
+                    e.getIdEntrega(),
+                    e.getIdPedido(),
+                    e.getIdRepartidor(),
+                    e.getFecha(),
+                    e.getHora()
             };
             tablaModel.addRow(fila);
         }
