@@ -44,10 +44,5 @@ public class ControladorRegistroRepartidor {
             ex.printStackTrace();
             ventanaRegistroRepartidor.mostrarMensajeError("Error al guardar el repartidor en la base de datos: " + ex.getMessage());
         }
-
-        String nombre = ventanaRegistroRepartidor.getNombreRepartidor();
-        if (nombre == null || nombre.isEmpty()) {
-            ventanaRegistroRepartidor.mostrarMensajeError("El nombre del repartidor no puede estar vacío.");
-        }
     }
 }

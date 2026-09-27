@@ -62,4 +62,8 @@ public class Pedido implements Cancelable {
         this.estadoPedido = estadoPedido;
     }
 
+    @Override
+    public String toString () {
+        return "Pedido #" + idPedido + " - " + direccionEntrega;
+    }
 }

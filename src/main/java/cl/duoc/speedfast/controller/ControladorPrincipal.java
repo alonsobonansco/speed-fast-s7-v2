@@ -16,6 +16,8 @@ public class ControladorPrincipal {
     private VentanaListaPedidos ventanaListaPedidos = null;
     private VentanaListaRepartidores ventanaListaRepartidores = null;
     private VentanaRegistroRepartidor ventanaRegistroRepartidor = null;
+    private VentanaRegistroEntrega ventanaRegistroEntrega = null;
+    private VentanaListaEntregas ventanaListaEntregas = null;
 
     public ControladorPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
@@ -28,6 +30,22 @@ public class ControladorPrincipal {
         ventanaPrincipal.addListarPedidosMenuListener(e -> ejecutarListarPedidos());
         ventanaPrincipal.addRegistrarRepartidorMenuListener(e -> ejecutarRegistroRepartidor());
         ventanaPrincipal.addListarRepartidoresMenuListener(e -> ejecutarListarRepartidores());
+        ventanaPrincipal.addRegistrarEntregaMenuListener(e -> ejecutarRegistroEntrega());
+        ventanaPrincipal.addListarEntregasMenuListener(e -> ejecutarListarEntregas());
+    }
+
+    private void ejecutarRegistroEntrega() {
+        if (ventanaRegistroEntrega == null || !ventanaRegistroEntrega.isDisplayable()) {
+            ventanaRegistroEntrega = new VentanaRegistroEntrega();
+
+            new ControladorRegistroEntrega(ventanaRegistroEntrega);
+
+            ventanaRegistroEntrega.setVisible(true);
+
+        } else {
+            ventanaRegistroEntrega.toFront();
+            ventanaRegistroEntrega.requestFocus();
+        }
     }
 
     private void ejecutarRegistroPedido() {
@@ -79,6 +97,18 @@ public class ControladorPrincipal {
         ventanaListaRepartidores.setVisible(true);
         ventanaListaRepartidores.toFront();
         ventanaListaRepartidores.requestFocus();
+    }
+
+    private void ejecutarListarEntregas() {
+        if (ventanaListaEntregas == null || !ventanaListaEntregas.isDisplayable()) {
+            ventanaListaEntregas = new VentanaListaEntregas();
+        }
+
+        new ControladorListaEntregas(ventanaListaEntregas);
+
+        ventanaListaEntregas.setVisible(true);
+        ventanaListaEntregas.toFront();
+        ventanaListaEntregas.requestFocus();
     }
 
     private void ejecutarIniciarEntregas() {

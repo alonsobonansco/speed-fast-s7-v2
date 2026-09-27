@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ControladorEntrega {
+public class ControladorRegistroEntrega {
 
     private final VentanaRegistroEntrega ventanaRegistroEntrega;
     private final EntregaDAO entregaDAO = new EntregaDAO();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
 
-    public ControladorEntrega(VentanaRegistroEntrega ventanaRegistroEntrega) {
+    public ControladorRegistroEntrega(VentanaRegistroEntrega ventanaRegistroEntrega) {
         this.ventanaRegistroEntrega = ventanaRegistroEntrega;
         inicializarListeners();
         cargarDatosEnComponentes();
@@ -27,7 +27,7 @@ public class ControladorEntrega {
 
     public void cargarDatosEnComponentes() {
         try {
-            ventanaRegistroEntrega.cargarPedidos(pedidoDAO.listarTodos());
+            ventanaRegistroEntrega.cargarPedidos(pedidoDAO.listarPendientes());
             ventanaRegistroEntrega.cargarRepartidores(repartidorDAO.listarTodos());
         } catch (SQLException ex) {
             ex.getStackTrace();
@@ -41,6 +41,7 @@ public class ControladorEntrega {
     }
 
     public void procesarAsignacion() {
+        try {
         Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
         Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
 
@@ -56,8 +57,9 @@ public class ControladorEntrega {
                 LocalTime.now()
         );
 
-        try {
+
             entregaDAO.guardar(nuevaEntrega);
+
             ventanaRegistroEntrega.mostrarMensajeConfirmacion("Entrega registrada con éxito en la Base de Datos");
             ventanaRegistroEntrega.cerrarVentana();
 

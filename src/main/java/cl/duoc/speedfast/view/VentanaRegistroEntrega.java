@@ -10,30 +10,72 @@ import java.util.List;
 
 public class VentanaRegistroEntrega extends JFrame {
 
+    private JLabel tituloLabel;
     private JComboBox<Pedido> pedidoJComboBox;
     private JComboBox<Repartidor> repartidorJComboBox;
     private JButton guardarButton;
     private JButton atrasButton;
 
     public VentanaRegistroEntrega() {
-        setTitle("Asignar Entrega Manual - SpeedFast");
+        setTitle("SpeedFast App");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(3, 2, 10, 20));
-        ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        setLayout(new BorderLayout(10, 10));
+        setResizable(false);
+
+        inicializarComponentes();
+        construirLayout();
+    }
+
+    private void inicializarComponentes() {
+        tituloLabel = new JLabel("Asignación de Entregas", SwingConstants.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
 
         pedidoJComboBox = new JComboBox<>();
         repartidorJComboBox = new JComboBox<>();
+
         guardarButton = new JButton("Asignar Entrega");
         atrasButton = new JButton("Atrás");
+    }
 
-        add(new JLabel("Seleccionar Pedido:"));
-        add(pedidoJComboBox);
-        add(new JLabel("Seleccionar Repartidor:"));
-        add(repartidorJComboBox);
-        add(guardarButton);
-        add(atrasButton);
+    private void construirLayout() {
+        add(tituloLabel, BorderLayout.NORTH);
+
+        JPanel panelFormulario = new JPanel(new GridBagLayout());
+        panelFormulario.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        Font fuenteCampos = new Font("Arial", Font.PLAIN, 14);
+
+        gbc.gridx = 0; gbc.gridy = 0;
+        JLabel pedidoLabel = new JLabel("Seleccionar Pedido:");
+        pedidoLabel.setFont(fuenteCampos);
+        panelFormulario.add(pedidoLabel, gbc);
+
+        gbc.gridx = 1; gbc.gridy = 0;
+        pedidoJComboBox.setFont(fuenteCampos);
+        panelFormulario.add(pedidoJComboBox, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        JLabel repartidorLabel = new JLabel("Seleccionar Repartidor:");
+        repartidorLabel.setFont(fuenteCampos);
+        panelFormulario.add(repartidorLabel, gbc);
+
+        gbc.gridx = 1; gbc.gridy = 1;
+        repartidorJComboBox.setFont(fuenteCampos);
+        panelFormulario.add(repartidorJComboBox, gbc);
+
+        add(panelFormulario, BorderLayout.CENTER);
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        panelBotones.add(guardarButton);
+        panelBotones.add(atrasButton);
+        add(panelBotones, BorderLayout.SOUTH);
     }
 
     public JComboBox<Pedido> getComboPedidos() {
@@ -64,7 +106,6 @@ public class VentanaRegistroEntrega extends JFrame {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Métodos para llenar los combos de forma fácil desde el controlador
     public void cargarPedidos(List<Pedido> pedidos) {
         pedidoJComboBox.removeAllItems();
         for (Pedido p : pedidos) pedidoJComboBox.addItem(p);

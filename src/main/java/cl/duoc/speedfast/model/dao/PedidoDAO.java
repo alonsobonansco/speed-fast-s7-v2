@@ -55,4 +55,32 @@ public class PedidoDAO {
 
         return listaPedidos;
     }
+
+    public List<Pedido> listarPendientes() throws SQLException {
+        List<Pedido> listaPendientes = new ArrayList<>();
+
+        String sql = "SELECT * FROM pedido WHERE estado = 'PENDIENTE'";
+
+        try (Connection conn = ConexionBD.obtenerConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String textoTipo = rs.getString("tipo");
+                String textoEstado = rs.getString("estado");
+
+                TipoPedido tipoPedido = TipoPedido.valueOf(textoTipo.toUpperCase());
+                EstadoPedido estadoPedido = EstadoPedido.valueOf(textoEstado.toUpperCase());
+
+                Pedido pedido = new Pedido(rs.getInt("id"),
+                        rs.getString("direccion"),
+                        tipoPedido);
+
+                pedido.setEstadoPedido(estadoPedido);
+                listaPendientes.add(pedido);
+            }
+        }
+
+        return listaPendientes;
+    }
 }

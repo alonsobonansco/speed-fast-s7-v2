@@ -82,4 +82,9 @@ public class Repartidor implements Runnable {
     private int calcularTiempoAleatorio(int baseMilisegundos, int rangoAleatorio) {
         return baseMilisegundos + ThreadLocalRandom.current().nextInt(rangoAleatorio);
     }
+
+    @Override
+    public String toString() {
+        return this.nombreRepartidor;
+    }
 }
