@@ -22,15 +22,15 @@ public class ControladorListaRepartidores {
         cargarDatosEnTabla();
     }
 
-    public void inicializarListeners() {
+    private void inicializarListeners() {
         ventanaListaRepartidores.addVolverAtrasListener(e -> ventanaListaRepartidores.cerrarVentana());
     }
 
-    public void cargarDatosEnTabla() {
+    private void cargarDatosEnTabla() {
         this.ventanaListaRepartidores.actualizarTabla(this.listaRepartidores);
     }
 
-    public void obtenerDatosDesdeBD() {
+    private void obtenerDatosDesdeBD() {
         try {
             this.listaRepartidores = repartidorDAO.listarTodos();
 

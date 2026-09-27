@@ -24,7 +24,7 @@ public class VentanaRegistroPedido extends JFrame {
         construirLayout();
     }
 
-    public void inicializarComponentes() {
+    private void inicializarComponentes() {
         tituloLabel = new JLabel("Formulario de Registro de Pedidos", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
@@ -38,7 +38,7 @@ public class VentanaRegistroPedido extends JFrame {
         atrasButton = new JButton("Atrás");
     }
 
-    public void construirLayout() {
+    private void construirLayout() {
         add(tituloLabel, BorderLayout.NORTH);
 
         JPanel panelFormulario = new JPanel(new GridBagLayout());

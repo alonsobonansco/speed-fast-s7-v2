@@ -4,7 +4,6 @@ import cl.duoc.speedfast.model.dao.EntregaDAO;
 import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
 import cl.duoc.speedfast.model.entity.Entrega;
-import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.service.Repartidor;
 import cl.duoc.speedfast.view.VentanaRegistroEntrega;
@@ -27,7 +26,7 @@ public class ControladorRegistroEntrega {
         cargarDatosEnComponentes();
     }
 
-    public void cargarDatosEnComponentes() {
+    private void cargarDatosEnComponentes() {
         try {
             ventanaRegistroEntrega.cargarPedidos(pedidoDAO.listarPendientes());
             ventanaRegistroEntrega.cargarRepartidores(repartidorDAO.listarTodos());
@@ -36,12 +35,12 @@ public class ControladorRegistroEntrega {
         }
     }
 
-    public void inicializarListeners() {
+    private void inicializarListeners() {
         ventanaRegistroEntrega.addGuardarListener(e -> procesarAsignacion());
         ventanaRegistroEntrega.addVolverAtrasListener(e -> ventanaRegistroEntrega.cerrarVentana());
     }
 
-    public void procesarAsignacion() {
+    private void procesarAsignacion() {
         Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
         Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
 

@@ -56,7 +56,7 @@ public class VentanaPrincipal extends JFrame {
         add(panelCentralLog, BorderLayout.CENTER);
     }
 
-    public void inicializarMenuBar() {
+    private void inicializarMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuPedidos = new JMenu("Pedidos");
