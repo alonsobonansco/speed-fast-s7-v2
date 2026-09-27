@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.view;
 
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,7 +1,7 @@
 package cl.duoc.speedfast.view;
 
 import cl.duoc.speedfast.model.entity.Pedido;
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 
 import javax.swing.*;
 import java.awt.*;

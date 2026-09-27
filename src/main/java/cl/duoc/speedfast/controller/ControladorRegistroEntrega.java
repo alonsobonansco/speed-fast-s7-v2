@@ -5,7 +5,7 @@ import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
 import cl.duoc.speedfast.model.entity.Entrega;
 import cl.duoc.speedfast.model.entity.Pedido;
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 import cl.duoc.speedfast.view.VentanaRegistroEntrega;
 
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package cl.duoc.speedfast.controller;
 
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 import cl.duoc.speedfast.view.VentanaListaRepartidores;
 
 import java.sql.SQLException;

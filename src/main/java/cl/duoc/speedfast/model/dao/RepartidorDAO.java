@@ -1,7 +1,7 @@
 package cl.duoc.speedfast.model.dao;
 
 import cl.duoc.speedfast.database.ConexionBD;
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
