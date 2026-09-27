@@ -18,7 +18,7 @@ public class VentanaRegistroEntrega extends JFrame {
 
     public VentanaRegistroEntrega() {
         setTitle("SpeedFast App");
-        setSize(500, 300);
+        setSize(700, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -60,6 +60,7 @@ public class VentanaRegistroEntrega extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.weightx = 1.0;
         pedidoJComboBox.setFont(fuenteCampos);
         panelFormulario.add(pedidoJComboBox, gbc);
 
@@ -71,6 +72,7 @@ public class VentanaRegistroEntrega extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
+        gbc.weightx = 1.0;
         repartidorJComboBox.setFont(fuenteCampos);
         panelFormulario.add(repartidorJComboBox, gbc);
 

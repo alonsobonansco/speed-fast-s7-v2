@@ -66,7 +66,6 @@ public class ControladorRegistroEntrega {
             ventanaRegistroEntrega.getComboPedidos().removeItem(pedidoSelec);
 
             ventanaRegistroEntrega.mostrarMensajeConfirmacion("Entrega registrada con éxito en la Base de Datos");
-            ventanaRegistroEntrega.cerrarVentana();
 
         } catch (Exception ex) {
             ventanaRegistroEntrega.mostrarMensajeError("Error al asignar la entrega: " + ex.getMessage());

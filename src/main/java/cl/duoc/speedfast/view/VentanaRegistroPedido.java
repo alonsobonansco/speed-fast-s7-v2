@@ -25,7 +25,7 @@ public class VentanaRegistroPedido extends JFrame {
     }
 
     public void inicializarComponentes() {
-        tituloLabel = new JLabel("Formulario de Registros de Pedidos", SwingConstants.CENTER);
+        tituloLabel = new JLabel("Formulario de Registro de Pedidos", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
 

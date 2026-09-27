@@ -68,7 +68,7 @@ public class VentanaPrincipal extends JFrame {
         menuRepartidores.add(itemListarRepartidores);
 
         JMenu menuEntregas = new JMenu("Entregas");
-        itemRegistrarEntrega = new JMenuItem("Asignar Entrega Manual");
+        itemRegistrarEntrega = new JMenuItem("Asignar Entrega a Repartidor");
         itemListarEntregas = new JMenuItem("Listar Entregas");
         menuEntregas.add(itemRegistrarEntrega);
         menuEntregas.add(itemListarEntregas);
