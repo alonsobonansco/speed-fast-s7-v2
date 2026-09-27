@@ -1,7 +1,7 @@
 package cl.duoc.speedfast.controller;
 
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
-import cl.duoc.speedfast.service.Repartidor;
+import cl.duoc.speedfast.model.entity.Repartidor;
 import cl.duoc.speedfast.view.VentanaRegistroRepartidor;
 
 import java.sql.SQLException;
@@ -24,14 +24,14 @@ public class ControladorRegistroRepartidor {
 
     private void procesarGuardado() {
         try {
-            String nombre = ventanaRegistroRepartidor.getNombreRepartidor();
+            String nombreRepartidor = ventanaRegistroRepartidor.getNombreRepartidor();
 
-            if (nombre.isBlank()) {
+            if (nombreRepartidor.isBlank()) {
                 ventanaRegistroRepartidor.mostrarMensajeError("El nombre del repartidor no puede estar vacío.");
                 return;
             }
 
-            Repartidor nuevoRepartidor = new Repartidor(0, nombre);
+            Repartidor nuevoRepartidor = new Repartidor(nombreRepartidor);
 
             repartidorDAO.guardar(nuevoRepartidor);
 

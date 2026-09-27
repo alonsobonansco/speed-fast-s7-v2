@@ -12,16 +12,23 @@ public class Pedido {
             throw new IllegalArgumentException("El ID del pedido debe ser válido.");
         }
 
-        this.tipoPedido = tipoPedido;
+        this.tipoPedido = validarTipoPedido(tipoPedido);
         this.idPedido = idPedido;
         setDireccionEntrega(direccionEntrega);
     }
 
     public Pedido(TipoPedido tipoPedido, String direccionEntrega) {
-        this.tipoPedido = tipoPedido;
-        this.idPedido = 0; // Se asignará un ID más adelante
+        this.tipoPedido = validarTipoPedido(tipoPedido);
+        this.idPedido = 0;
         setDireccionEntrega(direccionEntrega);
+    }
 
+    private TipoPedido validarTipoPedido(TipoPedido tipoPedido) {
+        if (tipoPedido == null) {
+            throw new IllegalArgumentException("El tipo de pedido no puede ser nulo.");
+        }
+
+        return tipoPedido;
     }
 
     public TipoPedido getTipoPedido() {
@@ -40,7 +47,8 @@ public class Pedido {
         if (direccionEntrega == null || direccionEntrega.isBlank()) {
             throw new IllegalArgumentException("La dirección de entrega debe ser válida.");
         }
-        this.direccionEntrega = direccionEntrega;
+
+        this.direccionEntrega = direccionEntrega.trim();
     }
 
     public EstadoPedido getEstadoPedido() {
@@ -48,6 +56,10 @@ public class Pedido {
     }
 
     public void setEstadoPedido(EstadoPedido estadoPedido) {
+        if (estadoPedido == null) {
+            throw new IllegalArgumentException("El estado del pedido no puede ser nulo.");
+        }
+
         this.estadoPedido = estadoPedido;
     }
 

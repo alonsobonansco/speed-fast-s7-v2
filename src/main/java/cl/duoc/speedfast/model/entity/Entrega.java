@@ -12,6 +12,19 @@ public class Entrega {
     private int idEntrega;
 
     public Entrega(int idPedido, int idRepartidor, LocalDate fecha, LocalTime hora) {
+        if (idPedido <= 0) {
+            throw new IllegalArgumentException("El ID del pedido debe ser válido.");
+        }
+        if (idRepartidor <= 0) {
+            throw new IllegalArgumentException("El ID del repartidor debe ser válido.");
+        }
+        if  (fecha == null) {
+            throw new IllegalArgumentException("La fecha no puede ser nula.");
+        }
+        if (hora == null) {
+            throw new IllegalArgumentException("La hora no puede ser nula.");
+        }
+
         this.idPedido = idPedido;
         this.idRepartidor = idRepartidor;
         this.fecha = fecha;
@@ -23,6 +36,9 @@ public class Entrega {
     }
 
     public void setIdEntrega(int idEntrega) {
+        if (idEntrega <= 0) {
+            throw new IllegalArgumentException("El ID de la entrega debe ser válido.");
+        }
         this.idEntrega = idEntrega;
     }
 
