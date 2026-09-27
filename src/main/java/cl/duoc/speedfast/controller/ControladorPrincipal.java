@@ -19,6 +19,8 @@ public class ControladorPrincipal {
     private VentanaRegistroEntrega ventanaRegistroEntrega = null;
     private VentanaListaEntregas ventanaListaEntregas = null;
 
+    private ControladorRepartoPedidos controladorRepartoPedidos = null;
+
     public ControladorPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
 
@@ -109,8 +111,10 @@ public class ControladorPrincipal {
     }
 
     private void ejecutarIniciarEntregas() {
+        ventanaPrincipal.setEstadoBotonSimulacion(false);
         ventanaPrincipal.clearLog();
-        ControladorRepartoPedidos controladorRepartoPedidos = new ControladorRepartoPedidos();
+
+        controladorRepartoPedidos = new ControladorRepartoPedidos(ventanaPrincipal);
         controladorRepartoPedidos.setLogListener(ventanaPrincipal::appendLog);
 
         try {
@@ -119,6 +123,7 @@ public class ControladorPrincipal {
 
         } catch (SQLException ex) {
             ventanaPrincipal.appendLog("No se pudo iniciar la simulación. Error de lectura en MySQL.");
+            ventanaPrincipal.setEstadoBotonSimulacion(true);
         }
     }
 }

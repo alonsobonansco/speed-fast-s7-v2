@@ -18,7 +18,7 @@ public class VentanaPrincipal extends JFrame {
     private JMenuItem itemListarRepartidores;
     private JMenuItem itemRegistrarEntrega;
     private JMenuItem itemListarEntregas;
-    private JMenu menuIniciarRepartos;
+    private JMenuItem itemIniciarRepartos;
 
     public VentanaPrincipal() {
         setTitle("SpeedFast App");
@@ -77,12 +77,12 @@ public class VentanaPrincipal extends JFrame {
         menuEntregas.add(itemRegistrarEntrega);
         menuEntregas.add(itemListarEntregas);
 
-        menuIniciarRepartos = new JMenu("Iniciar Repartos");
+        itemIniciarRepartos = new JMenuItem("Iniciar Repartos");
 
         menuBar.add(menuPedidos);
         menuBar.add(menuRepartidores);
         menuBar.add(menuEntregas);
-        menuBar.add(menuIniciarRepartos);
+        menuBar.add(itemIniciarRepartos);
 
         setJMenuBar(menuBar);
     }
@@ -125,13 +125,10 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void addIniciarRepartosMenuListener(ActionListener listener) {
-        menuIniciarRepartos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    listener.actionPerformed(new ActionEvent(menuIniciarRepartos, ActionEvent.ACTION_PERFORMED, ""));
-                }
-            }
-        });
+        itemIniciarRepartos.addActionListener(listener);
+    }
+
+    public void setEstadoBotonSimulacion(boolean encendido) {
+        SwingUtilities.invokeLater(() -> itemIniciarRepartos.setEnabled(encendido));
     }
 }

@@ -70,9 +70,6 @@ public class Repartidor implements Runnable {
                     TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
                     controladorRepartoPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
 
-                    pedido.setEstadoPedido(EN_REPARTO);
-
-
                     TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
 
                     controladorRepartoPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");

@@ -8,6 +8,7 @@ import cl.duoc.speedfast.model.entity.Entrega;
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.model.entity.Repartidor;
+import cl.duoc.speedfast.view.VentanaPrincipal;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,12 @@ public class ControladorRepartoPedidos {
     private List<Pedido> listaPedidosEnSimulacion;
     private LogListener logListener;
     private int repartidoresActivos = 0;
+
+    private final VentanaPrincipal ventanaPrincipal;
+
+    public ControladorRepartoPedidos(VentanaPrincipal ventanaPrincipal) {
+        this.ventanaPrincipal = ventanaPrincipal;
+    }
 
     public synchronized void registrarEntregaEnBD(Pedido pedido) {
         try {
@@ -37,6 +44,7 @@ public class ControladorRepartoPedidos {
     public void iniciarSimulacionReparto(List<Pedido> listaPedidos) {
         if (listaPedidos == null || listaPedidos.isEmpty()) {
             escribirMensaje("[AVISO] No hay pedidos registrados en el sistema para despachar.");
+            habilitarInicioSimulacion();
             return;
         }
 
@@ -49,6 +57,7 @@ public class ControladorRepartoPedidos {
 
             if (listaRepartidores.isEmpty()) {
                 escribirMensaje("[AVISO] No hay repartidores registrados en el sistema.");
+                habilitarInicioSimulacion();
                 return;
             }
 
@@ -63,6 +72,7 @@ public class ControladorRepartoPedidos {
 
         } catch (SQLException ex) {
             escribirMensaje("[ERROR] Error al listar los repartidores: " + ex.getMessage());
+            habilitarInicioSimulacion();
         }
     }
 
@@ -92,6 +102,13 @@ public class ControladorRepartoPedidos {
         this.repartidoresActivos--;
         if (repartidoresActivos == 0) {
             escribirMensaje("\n[AVISO] Todos los pedidos han sido procesados.");
+            habilitarInicioSimulacion();
+        }
+    }
+
+    private void habilitarInicioSimulacion() {
+        if (ventanaPrincipal != null) {
+            ventanaPrincipal.setEstadoBotonSimulacion(true);
         }
     }
 
