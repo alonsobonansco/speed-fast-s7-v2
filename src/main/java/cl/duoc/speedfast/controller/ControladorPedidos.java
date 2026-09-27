@@ -2,6 +2,7 @@ package cl.duoc.speedfast.controller;
 
 import cl.duoc.speedfast.event.LogListener;
 import cl.duoc.speedfast.model.dao.PedidoDAO;
+import cl.duoc.speedfast.model.dao.RepartidorDAO;
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.service.Repartidor;
@@ -16,13 +17,13 @@ public class ControladorPedidos {
 
     private final BlockingQueue<Pedido> pedidosPendientes = new LinkedBlockingQueue<>();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final RepartidorDAO repartidorDAO = new RepartidorDAO();
     private LogListener logListener;
     private int repartidoresActivos = 0;
 
-    public synchronized void registrarEntregaEnBD(Pedido pedido, String nombreRepartidor) {
+    public synchronized void registrarEntregaEnBD(Pedido pedido) {
         try {
             pedidoDAO.actualizarEstado(pedido.getIdPedido(), EstadoPedido.ENTREGADO);
-            escribirMensaje("[ENTREGADO] Pedido #" + pedido.getIdPedido() + " entregado por repartidor [" + nombreRepartidor + "]");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -43,39 +44,39 @@ public class ControladorPedidos {
 
         pedidosPendientes.clear();
 
-        /*for (Pedido pedido : listaPedidos) {
-            if (pedido.getEstadoPedido() == EstadoPedido.PENDIENTE) {
-
-                if (pedido.validarPedido()) {
-                    agregarPedido(pedido);
-                } else {
-                    String motivo = switch (pedido.getTipoPedido()) {
-                        case COMIDA -> "Comida en mal estado.";
-                        case ENCOMIENDA -> "El peso excede el límite máximo de " +
-                                PedidoEncomienda.getCapacidadMaximaKg() + " kg.";
-                        case EXPRESS -> "La distancia excede el límite máximo de " +
-                                PedidoExpress.getDistanciaMaximaKm() + " km.";
-                        default -> "Tipo de pedido desconocido.";
-                    };
-
-                    escribirMensaje("[RECHAZADO] Pedido #" + pedido.getIdPedido() + ". Motivo: " + motivo);
-                }
-            }
-        }*/
+       for (Pedido p : listaPedidos) {
+           if (p.getEstadoPedido() == EstadoPedido.PENDIENTE || p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
+               agregarPedido(p);
+           }
+       }
 
         if (pedidosPendientes.isEmpty()) {
             escribirMensaje("[AVISO] No quedan pedidos pendientes por entregar.");
             return;
         }
 
-        escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE --- ");
+        escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE DESDE BASE DE DATOS --- ");
 
-        String[] nombresRepartidores = {"Juan", "María", "Carlos"};
-        this.repartidoresActivos = nombresRepartidores.length;
+        try {
+            List<Repartidor> listaRepartidores = repartidorDAO.listarTodos();
 
-        for (String nombre : nombresRepartidores) {
-            Thread hiloRepartidor = new Thread(new Repartidor(nombre, this));
-            hiloRepartidor.start();
+            if (listaRepartidores.isEmpty()) {
+                escribirMensaje("[AVISO] No hay repartidores registrados en el sistema.");
+                return;
+            }
+
+            repartidoresActivos = listaRepartidores.size();
+
+            for (Repartidor r : listaRepartidores) {
+                r.setControladorPedidos(this);
+
+                Thread hiloRepartidor = new Thread(r);
+                hiloRepartidor.start();
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            escribirMensaje("[ERROR] Error al listar los repartidores: " + ex.getMessage());
         }
     }
 

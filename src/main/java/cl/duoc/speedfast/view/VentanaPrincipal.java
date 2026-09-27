@@ -1,7 +1,10 @@
 package cl.duoc.speedfast.view;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VentanaPrincipal extends JFrame {
@@ -15,6 +18,7 @@ public class VentanaPrincipal extends JFrame {
     private JMenuItem itemListarRepartidores;
     private JMenuItem itemRegistrarEntrega;
     private JMenuItem itemListarEntregas;
+    private JMenu menuIniciarRepartos;
 
     public VentanaPrincipal() {
         setTitle("SpeedFast App");
@@ -73,9 +77,12 @@ public class VentanaPrincipal extends JFrame {
         menuEntregas.add(itemRegistrarEntrega);
         menuEntregas.add(itemListarEntregas);
 
+        menuIniciarRepartos = new JMenu("Iniciar Repartos");
+
         menuBar.add(menuPedidos);
         menuBar.add(menuRepartidores);
         menuBar.add(menuEntregas);
+        menuBar.add(menuIniciarRepartos);
 
         setJMenuBar(menuBar);
     }
@@ -117,4 +124,19 @@ public class VentanaPrincipal extends JFrame {
         itemListarEntregas.addActionListener(listener);
     }
 
-}
+    public void addIniciarRepartosMenuListener(ActionListener listener) {
+            menuIniciarRepartos.addMenuListener(new MenuListener() {
+                @Override
+                public void menuSelected(MenuEvent e) {
+                    listener.actionPerformed(new ActionEvent(menuIniciarRepartos, ActionEvent.ACTION_PERFORMED, ""));
+                }
+
+                @Override
+                public void menuDeselected(MenuEvent e) {}
+                @Override
+                public void menuCanceled(MenuEvent e) {}
+            });
+        }
+    }
+
+

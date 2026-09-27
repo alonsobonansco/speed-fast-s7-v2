@@ -31,12 +31,15 @@ public class Repartidor implements Runnable {
         this.nombreRepartidor = nombreRepartidor;
     }
 
-    public int getIdRepartidor() {
-        return idRepartidor;
+    public void setControladorPedidos(ControladorPedidos controladorPedidos) {
+        if (controladorPedidos == null) {
+            throw new IllegalArgumentException("El controlador de pedidos no puede ser nulo");
+        }
+        this.controladorPedidos = controladorPedidos;
     }
 
-    public void setIdRepartidor(int idRepartidor) {
-        this.idRepartidor = idRepartidor;
+    public int getIdRepartidor() {
+        return idRepartidor;
     }
 
     public String getNombreRepartidor() {
@@ -58,6 +61,7 @@ public class Repartidor implements Runnable {
 
                 pedido.setEstadoPedido(EN_REPARTO);
 
+
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
 
                 controladorPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");
@@ -68,7 +72,7 @@ public class Repartidor implements Runnable {
 
                 controladorPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
 
-                controladorPedidos.registrarEntregaEnBD(pedido, this.nombreRepartidor);
+                controladorPedidos.registrarEntregaEnBD(pedido);
 
             } catch (InterruptedException e) {
                 controladorPedidos.escribirMensaje("Entrega interrumpida");

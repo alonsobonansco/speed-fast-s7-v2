@@ -32,6 +32,7 @@ public class ControladorPrincipal {
         ventanaPrincipal.addListarRepartidoresMenuListener(e -> ejecutarListarRepartidores());
         ventanaPrincipal.addRegistrarEntregaMenuListener(e -> ejecutarRegistroEntrega());
         ventanaPrincipal.addListarEntregasMenuListener(e -> ejecutarListarEntregas());
+        ventanaPrincipal.addIniciarRepartosMenuListener(e -> ejecutarIniciarEntregas());
     }
 
     private void ejecutarRegistroEntrega() {
