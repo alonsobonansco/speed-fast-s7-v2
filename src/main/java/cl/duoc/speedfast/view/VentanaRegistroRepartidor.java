@@ -37,7 +37,6 @@ public class VentanaRegistroRepartidor extends JFrame {
     private void construirLayout() {
         add(tituloLabel, BorderLayout.NORTH);
 
-        // Diseñamos un contenedor central espacioso para el campo de texto
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
@@ -56,7 +55,6 @@ public class VentanaRegistroRepartidor extends JFrame {
 
         add(panelFormulario, BorderLayout.CENTER);
 
-        // Panel inferior para los botones de acción
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         panelBotones.add(guardarButton);
         panelBotones.add(atrasButton);
