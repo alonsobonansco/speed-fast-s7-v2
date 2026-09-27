@@ -34,10 +34,9 @@ public class RepartidorDAO {
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                listaRepartidores.add(
-                        new Repartidor(
-                                rs.getInt("id"),
-                                rs.getString("nombre")));
+                listaRepartidores.add(new Repartidor(
+                        rs.getInt("id"),
+                        rs.getString("nombre")));
             }
         }
 

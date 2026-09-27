@@ -43,7 +43,8 @@ public class PedidoDAO {
                 TipoPedido tipoPedido = TipoPedido.valueOf(textoTipo.toUpperCase());
                 EstadoPedido estadoPedido = EstadoPedido.valueOf(textoEstado.toUpperCase());
 
-                Pedido pedido = new Pedido(rs.getInt("id"),
+                Pedido pedido = new Pedido(
+                        rs.getInt("id"),
                         rs.getString("direccion"),
                         tipoPedido);
 
@@ -71,7 +72,8 @@ public class PedidoDAO {
                 TipoPedido tipoPedido = TipoPedido.valueOf(textoTipo.toUpperCase());
                 EstadoPedido estadoPedido = EstadoPedido.valueOf(textoEstado.toUpperCase());
 
-                Pedido pedido = new Pedido(rs.getInt("id"),
+                Pedido pedido = new Pedido(
+                        rs.getInt("id"),
                         rs.getString("direccion"),
                         tipoPedido);
 
