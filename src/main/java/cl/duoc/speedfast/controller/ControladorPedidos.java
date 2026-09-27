@@ -11,13 +11,9 @@ import cl.duoc.speedfast.service.Repartidor;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class ControladorPedidos {
 
-    private final BlockingQueue<Pedido> pedidosPendientes = new LinkedBlockingQueue<>();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
     private final EntregaDAO entregaDAO = new EntregaDAO();
@@ -39,7 +35,6 @@ public class ControladorPedidos {
         this.logListener = logListener;
     }
 
-
     public void iniciarSimulacionReparto(List<Pedido> listaPedidos) {
         if (listaPedidos == null || listaPedidos.isEmpty()) {
             escribirMensaje("[AVISO] No hay pedidos registrados en el sistema para despachar.");
@@ -47,19 +42,6 @@ public class ControladorPedidos {
         }
 
         this.listaPedidosEnSimulacion = listaPedidos;
-
-        //pedidosPendientes.clear();
-
-       /*for (Pedido p : listaPedidos) {
-           if (p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
-               agregarPedido(p);
-           }
-       }
-
-        if (pedidosPendientes.isEmpty()) {
-            escribirMensaje("[AVISO] No hay pedidos asignados en preparación.");
-            return;
-        }*/
 
         escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE DESDE BASE DE DATOS --- ");
 
@@ -86,23 +68,14 @@ public class ControladorPedidos {
         }
     }
 
-    private void agregarPedido(Pedido pedido) {
-        pedidosPendientes.add(Objects.requireNonNull(
-                pedido, "El pedido no puede ser nulo."
-        ));
-    }
-
     public synchronized Pedido retirarPedidoPorRepartidor(int idRepartidor) {
         try {
             List<Entrega> listaEntregas = entregaDAO.listarTodos();
 
             for (Pedido p : listaPedidosEnSimulacion) {
                 if (p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
-
                     for (Entrega e : listaEntregas) {
-
                         if (e.getIdPedido() == p.getIdPedido() && e.getIdRepartidor() == idRepartidor) {
-
                             p.setEstadoPedido(EstadoPedido.ENTREGADO);
                             return p;
                         }
@@ -115,9 +88,7 @@ public class ControladorPedidos {
             escribirMensaje("[ERROR] Error al retirar el pedido: " + ex.getMessage());
         }
 
-
         return null;
-        //return pedidosPendientes.poll();
     }
 
     public synchronized void finalizarSimulacion() {
