@@ -10,6 +10,7 @@ import cl.duoc.speedfast.service.Repartidor;
 import cl.duoc.speedfast.view.VentanaRegistroEntrega;
 
 import java.sql.SQLException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -31,7 +32,6 @@ public class ControladorRegistroEntrega {
             ventanaRegistroEntrega.cargarPedidos(pedidoDAO.listarPendientes());
             ventanaRegistroEntrega.cargarRepartidores(repartidorDAO.listarTodos());
         } catch (SQLException ex) {
-            ex.getStackTrace();
             ventanaRegistroEntrega.mostrarMensajeError("Error al cargar los datos: " + ex.getMessage());
         }
     }
@@ -42,15 +42,15 @@ public class ControladorRegistroEntrega {
     }
 
     public void procesarAsignacion() {
+        Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
+        Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
+
+        if (pedidoSelec == null || repartidorSelec == null) {
+            ventanaRegistroEntrega.mostrarMensajeError("Debe seleccionar un pedido y un repartidor obligatoriamente.");
+            return;
+        }
+
         try {
-            Pedido pedidoSelec = (Pedido) ventanaRegistroEntrega.getComboPedidos().getSelectedItem();
-            Repartidor repartidorSelec = (Repartidor) ventanaRegistroEntrega.getComboRepartidores().getSelectedItem();
-
-            if (pedidoSelec == null || repartidorSelec == null) {
-                ventanaRegistroEntrega.mostrarMensajeError("Debe seleccionar un pedido y un repartidor obligatoriamente.");
-                return;
-            }
-
             Entrega nuevaEntrega = new Entrega(
                     pedidoSelec.getIdPedido(),
                     repartidorSelec.getIdRepartidor(),
@@ -60,14 +60,15 @@ public class ControladorRegistroEntrega {
 
             entregaDAO.guardar(nuevaEntrega);
 
-            pedidoDAO.actualizarEstado(pedidoSelec.getIdPedido(), EstadoPedido.EN_REPARTO);
-
             ventanaRegistroEntrega.getComboPedidos().removeItem(pedidoSelec);
 
             ventanaRegistroEntrega.mostrarMensajeConfirmacion("Entrega registrada con éxito en la Base de Datos");
 
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | DateTimeException e) {
             ventanaRegistroEntrega.mostrarMensajeError("Error al asignar la entrega: " + e.getMessage());
+
+        } catch (SQLException ex) {
+            ventanaRegistroEntrega.mostrarMensajeError("Error al guardar la entrega en la base de datos: " + ex.getMessage());
         }
     }
 }

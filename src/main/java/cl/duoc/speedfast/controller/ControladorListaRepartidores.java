@@ -4,6 +4,8 @@ import cl.duoc.speedfast.model.dao.RepartidorDAO;
 import cl.duoc.speedfast.service.Repartidor;
 import cl.duoc.speedfast.view.VentanaListaRepartidores;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorListaRepartidores {
@@ -31,8 +33,10 @@ public class ControladorListaRepartidores {
     public void obtenerDatosDesdeBD() {
         try {
             this.listaRepartidores = repartidorDAO.listarTodos();
-        } catch (Exception ex) {
+
+        } catch (SQLException ex) {
             ventanaListaRepartidores.mostrarMensajeError("Error al obtener los datos: " + ex.getMessage());
+            listaRepartidores = new ArrayList<>();
         }
     }
 }

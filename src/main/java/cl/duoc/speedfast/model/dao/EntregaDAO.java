@@ -10,17 +10,42 @@ import java.util.List;
 public class EntregaDAO {
 
     public void guardar(Entrega entrega) throws SQLException {
-        String sql = "INSERT INTO entrega (id_pedido, id_repartidor, fecha, hora) VALUES (?, ?, ?, ?)";
+        String sqlEntrega = "INSERT INTO entrega (id_pedido, id_repartidor, fecha, hora) VALUES (?, ?, ?, ?)";
+        String sqlPedido = "UPDATE pedido SET estado = 'EN_REPARTO' WHERE id = ?";
 
-        try (Connection conn = ConexionBD.obtenerConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
 
-            pstmt.setInt(1, entrega.getIdPedido());
-            pstmt.setInt(2, entrega.getIdRepartidor());
-            pstmt.setDate(3, Date.valueOf(entrega.getFecha()));
-            pstmt.setTime(4, Time.valueOf(entrega.getHora()));
+        try {
+            conn = ConexionBD.obtenerConexion();
+            conn.setAutoCommit(false);
 
-            pstmt.executeUpdate();
+            try (PreparedStatement pstmtEntrega = conn.prepareStatement(sqlEntrega);
+                 PreparedStatement pstmtPedido = conn.prepareStatement(sqlPedido)) {
+
+                pstmtEntrega.setInt(1, entrega.getIdPedido());
+                pstmtEntrega.setInt(2, entrega.getIdRepartidor());
+                pstmtEntrega.setDate(3, Date.valueOf(entrega.getFecha()));
+                pstmtEntrega.setTime(4, Time.valueOf(entrega.getHora()));
+
+                pstmtEntrega.executeUpdate();
+
+                pstmtPedido.setInt(1, entrega.getIdPedido());
+                pstmtPedido.executeUpdate();
+
+                conn.commit();
+            }
+
+        } catch (SQLException ex) {
+            if (conn != null) {
+                conn.rollback();
+            }
+
+            throw ex;
+
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
         }
     }
 
@@ -43,6 +68,7 @@ public class EntregaDAO {
                 listaEntregas.add(entrega);
             }
         }
+
         return listaEntregas;
     }
 }

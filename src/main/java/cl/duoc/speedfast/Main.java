@@ -1,7 +1,7 @@
 package cl.duoc.speedfast;
 
-import cl.duoc.speedfast.database.ConexionBD;
 import cl.duoc.speedfast.controller.ControladorPrincipal;
+import cl.duoc.speedfast.database.ConexionBD;
 import cl.duoc.speedfast.view.VentanaPrincipal;
 
 import javax.swing.*;
@@ -24,7 +24,7 @@ public class Main {
                 System.out.println("No se pudo establecer la conexión a la base de datos.");
             }
         } catch (SQLException ex) {
-            System.out.println("Error al cerrar la conexión a la base de datos: " + ex.getMessage());
+            System.out.println("Error en la conexión a la base de datos: " + ex.getMessage());
         }
     }
 }

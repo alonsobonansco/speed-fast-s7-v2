@@ -48,41 +48,45 @@ public class Repartidor implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            Pedido pedido = controladorRepartoPedidos.retirarPedidoPorRepartidor(this.idRepartidor);
+        try {
+            while (true) {
+                Pedido pedido = controladorRepartoPedidos.retirarPedidoPorRepartidor(this.idRepartidor);
 
-            if (pedido == null) {
-                break;
+                if (pedido == null) break;
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
+                    controladorRepartoPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
+
+                    pedido.setEstadoPedido(EN_REPARTO);
+
+
+                    TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
+
+                    controladorRepartoPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");
+
+                    TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
+
+                    pedido.setEstadoPedido(ENTREGADO);
+
+                    controladorRepartoPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
+
+                    controladorRepartoPedidos.registrarEntregaEnBD(pedido);
+
+                } catch (InterruptedException e) {
+                    controladorRepartoPedidos.escribirMensaje("Entrega interrumpida");
+
+                    Thread.currentThread().interrupt();
+                    break;
+                }
             }
 
-            try {
-                TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
-                controladorRepartoPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
+        } catch (RuntimeException e) {
+            controladorRepartoPedidos.escribirMensaje("[ERROR] Error en el hilo del repartidor [" + nombreRepartidor + "]: " + e.getMessage());
 
-                pedido.setEstadoPedido(EN_REPARTO);
-
-
-                TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
-
-                controladorRepartoPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");
-
-                TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
-
-                pedido.setEstadoPedido(ENTREGADO);
-
-                controladorRepartoPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
-
-                controladorRepartoPedidos.registrarEntregaEnBD(pedido);
-
-            } catch (InterruptedException e) {
-                controladorRepartoPedidos.escribirMensaje("Entrega interrumpida");
-
-                Thread.currentThread().interrupt();
-                break;
-            }
+        } finally {
+            controladorRepartoPedidos.finalizarSimulacion();
         }
-
-        controladorRepartoPedidos.finalizarSimulacion();
     }
 
     private int calcularTiempoAleatorio(int baseMilisegundos, int rangoAleatorio) {

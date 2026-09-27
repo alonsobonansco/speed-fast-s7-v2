@@ -5,15 +5,11 @@ import java.time.LocalTime;
 
 public class Entrega {
 
+    private final int idPedido;
+    private final int idRepartidor;
+    private final LocalDate fecha;
+    private final LocalTime hora;
     private int idEntrega;
-    private int idPedido;
-    private int idRepartidor;
-    private LocalDate fecha;
-    private LocalTime hora;
-
-    public Entrega() {
-
-    }
 
     public Entrega(int idPedido, int idRepartidor, LocalDate fecha, LocalTime hora) {
         this.idPedido = idPedido;
@@ -34,31 +30,15 @@ public class Entrega {
         return idPedido;
     }
 
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
-
     public int getIdRepartidor() {
         return idRepartidor;
-    }
-
-    public void setIdRepartidor(int idRepartidor) {
-        this.idRepartidor = idRepartidor;
     }
 
     public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
     public LocalTime getHora() {
         return hora;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
     }
 }

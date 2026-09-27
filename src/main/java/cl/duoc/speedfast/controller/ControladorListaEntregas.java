@@ -5,6 +5,7 @@ import cl.duoc.speedfast.model.entity.Entrega;
 import cl.duoc.speedfast.view.VentanaListaEntregas;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorListaEntregas {
@@ -28,8 +29,10 @@ public class ControladorListaEntregas {
     private void obtenerDatosDesdeBD() {
         try {
             listaEntregas = entregaDAO.listarTodos();
+
         } catch (SQLException ex) {
             ventanaListaEntregas.mostrarMensajeError("Error al obtener los datos de la base de datos: " + ex.getMessage());
+            listaEntregas = new ArrayList<>();
         }
     }
 

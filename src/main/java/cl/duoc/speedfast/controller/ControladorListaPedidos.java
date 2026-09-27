@@ -4,6 +4,8 @@ import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.view.VentanaListaPedidos;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorListaPedidos {
@@ -31,8 +33,10 @@ public class ControladorListaPedidos {
     private void obtenerDatosDesdeBD() {
         try {
             this.listaPedidos = pedidoDAO.listarTodos();
-        } catch (Exception e) {
-            ventanaListaPedidos.mostrarMensajeError("Error al obtener los datos de la base de datos: " + e.getMessage());
+
+        } catch (SQLException ex) {
+            ventanaListaPedidos.mostrarMensajeError("Error al obtener los datos de la base de datos: " + ex.getMessage());
+            listaPedidos = new ArrayList<>();
         }
     }
 }
