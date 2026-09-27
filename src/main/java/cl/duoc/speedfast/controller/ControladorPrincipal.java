@@ -42,8 +42,6 @@ public class ControladorPrincipal {
             new ControladorRegistroEntrega(ventanaRegistroEntrega);
 
             ventanaRegistroEntrega.setVisible(true);
-
-        } else {
             ventanaRegistroEntrega.toFront();
             ventanaRegistroEntrega.requestFocus();
         }
@@ -57,8 +55,6 @@ public class ControladorPrincipal {
             new ControladorRegistroPedido(ventanaRegistroPedido);
 
             ventanaRegistroPedido.setVisible(true);
-
-        } else {
             ventanaRegistroPedido.toFront();
             ventanaRegistroPedido.requestFocus();
         }
