@@ -58,7 +58,6 @@ public class ControladorRegistroEntrega {
                     LocalTime.now()
             );
 
-
             entregaDAO.guardar(nuevaEntrega);
 
             pedidoDAO.actualizarEstado(pedidoSelec.getIdPedido(), EstadoPedido.EN_REPARTO);
@@ -67,10 +66,8 @@ public class ControladorRegistroEntrega {
 
             ventanaRegistroEntrega.mostrarMensajeConfirmacion("Entrega registrada con éxito en la Base de Datos");
 
-        } catch (Exception ex) {
-            ventanaRegistroEntrega.mostrarMensajeError("Error al asignar la entrega: " + ex.getMessage());
+        } catch (Exception e) {
+            ventanaRegistroEntrega.mostrarMensajeError("Error al asignar la entrega: " + e.getMessage());
         }
-
     }
-
 }

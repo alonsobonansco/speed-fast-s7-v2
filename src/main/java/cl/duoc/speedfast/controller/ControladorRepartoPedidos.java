@@ -12,7 +12,7 @@ import cl.duoc.speedfast.service.Repartidor;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ControladorPedidos {
+public class ControladorRepartoPedidos {
 
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
@@ -26,7 +26,6 @@ public class ControladorPedidos {
             pedidoDAO.actualizarEstado(pedido.getIdPedido(), EstadoPedido.ENTREGADO);
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
             escribirMensaje("[ERROR] Error al registrar la entrega en la base de datos: " + ex.getMessage());
         }
     }
@@ -63,7 +62,6 @@ public class ControladorPedidos {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
             escribirMensaje("[ERROR] Error al listar los repartidores: " + ex.getMessage());
         }
     }
@@ -84,7 +82,6 @@ public class ControladorPedidos {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
             escribirMensaje("[ERROR] Error al retirar el pedido: " + ex.getMessage());
         }
 

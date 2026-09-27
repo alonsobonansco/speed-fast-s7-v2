@@ -32,7 +32,6 @@ public class ControladorListaPedidos {
         try {
             this.listaPedidos = pedidoDAO.listarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             ventanaListaPedidos.mostrarMensajeError("Error al obtener los datos de la base de datos: " + e.getMessage());
         }
     }

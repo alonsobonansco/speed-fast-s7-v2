@@ -114,15 +114,14 @@ public class ControladorPrincipal {
 
     private void ejecutarIniciarEntregas() {
         ventanaPrincipal.clearLog();
-        ControladorPedidos controladorPedidos = new ControladorPedidos();
-        controladorPedidos.setLogListener(ventanaPrincipal::appendLog);
+        ControladorRepartoPedidos controladorRepartoPedidos = new ControladorRepartoPedidos();
+        controladorRepartoPedidos.setLogListener(ventanaPrincipal::appendLog);
 
         try {
             List<Pedido> pedidosBD = pedidoDAO.listarTodos();
-            controladorPedidos.iniciarSimulacionReparto(pedidosBD);
+            controladorRepartoPedidos.iniciarSimulacionReparto(pedidosBD);
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
             ventanaPrincipal.appendLog("No se pudo iniciar la simulación. Error de lectura en MySQL.");
         }
     }

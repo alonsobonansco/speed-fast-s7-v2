@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.service;
 
-import cl.duoc.speedfast.controller.ControladorPedidos;
+import cl.duoc.speedfast.controller.ControladorRepartoPedidos;
 import cl.duoc.speedfast.model.entity.Pedido;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -13,17 +13,17 @@ public class Repartidor implements Runnable {
 
     private final String nombreRepartidor;
     private int idRepartidor;
-    private ControladorPedidos controladorPedidos;
+    private ControladorRepartoPedidos controladorRepartoPedidos;
 
-    public Repartidor(String nombreRepartidor, ControladorPedidos controladorPedidos) {
+    public Repartidor(String nombreRepartidor, ControladorRepartoPedidos controladorRepartoPedidos) {
         if (nombreRepartidor == null || nombreRepartidor.isEmpty()) {
             throw new IllegalArgumentException("El nombre del repartidor no puede ser nulo o vacío");
         }
-        if (controladorPedidos == null) {
+        if (controladorRepartoPedidos == null) {
             throw new IllegalArgumentException("El controlador de pedidos no puede ser nulo");
         }
         this.nombreRepartidor = nombreRepartidor;
-        this.controladorPedidos = controladorPedidos;
+        this.controladorRepartoPedidos = controladorRepartoPedidos;
     }
 
     public Repartidor(int idRepartidor, String nombreRepartidor) {
@@ -31,11 +31,11 @@ public class Repartidor implements Runnable {
         this.nombreRepartidor = nombreRepartidor;
     }
 
-    public void setControladorPedidos(ControladorPedidos controladorPedidos) {
-        if (controladorPedidos == null) {
+    public void setControladorPedidos(ControladorRepartoPedidos controladorRepartoPedidos) {
+        if (controladorRepartoPedidos == null) {
             throw new IllegalArgumentException("El controlador de pedidos no puede ser nulo");
         }
-        this.controladorPedidos = controladorPedidos;
+        this.controladorRepartoPedidos = controladorRepartoPedidos;
     }
 
     public int getIdRepartidor() {
@@ -49,7 +49,7 @@ public class Repartidor implements Runnable {
     @Override
     public void run() {
         while (true) {
-            Pedido pedido = controladorPedidos.retirarPedidoPorRepartidor(this.idRepartidor);
+            Pedido pedido = controladorRepartoPedidos.retirarPedidoPorRepartidor(this.idRepartidor);
 
             if (pedido == null) {
                 break;
@@ -57,32 +57,32 @@ public class Repartidor implements Runnable {
 
             try {
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
-                controladorPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
+                controladorRepartoPedidos.escribirMensaje("[CARGA] Repartidor [" + nombreRepartidor + "] retirando pedido #" + pedido.getIdPedido());
 
                 pedido.setEstadoPedido(EN_REPARTO);
 
 
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1500, 1500));
 
-                controladorPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");
+                controladorRepartoPedidos.escribirMensaje("[RUTA] Pedido #" + pedido.getIdPedido() + " se encuentra en reparto");
 
                 TimeUnit.MILLISECONDS.sleep(calcularTiempoAleatorio(1000, 1000));
 
                 pedido.setEstadoPedido(ENTREGADO);
 
-                controladorPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
+                controladorRepartoPedidos.escribirMensaje("[ENTREGA] Pedido #" + pedido.getIdPedido() + " ha sido entregado por [" + nombreRepartidor + "]");
 
-                controladorPedidos.registrarEntregaEnBD(pedido);
+                controladorRepartoPedidos.registrarEntregaEnBD(pedido);
 
             } catch (InterruptedException e) {
-                controladorPedidos.escribirMensaje("Entrega interrumpida");
+                controladorRepartoPedidos.escribirMensaje("Entrega interrumpida");
 
                 Thread.currentThread().interrupt();
                 break;
             }
         }
 
-        controladorPedidos.finalizarSimulacion();
+        controladorRepartoPedidos.finalizarSimulacion();
     }
 
     private int calcularTiempoAleatorio(int baseMilisegundos, int rangoAleatorio) {

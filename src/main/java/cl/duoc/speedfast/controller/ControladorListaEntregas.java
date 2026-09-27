@@ -29,7 +29,6 @@ public class ControladorListaEntregas {
         try {
             listaEntregas = entregaDAO.listarTodos();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             ventanaListaEntregas.mostrarMensajeError("Error al obtener los datos de la base de datos: " + ex.getMessage());
         }
     }

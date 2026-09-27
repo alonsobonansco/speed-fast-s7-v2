@@ -32,9 +32,7 @@ public class ControladorListaRepartidores {
         try {
             this.listaRepartidores = repartidorDAO.listarTodos();
         } catch (Exception ex) {
-            ex.getStackTrace();
             ventanaListaRepartidores.mostrarMensajeError("Error al obtener los datos: " + ex.getMessage());
         }
     }
-
 }

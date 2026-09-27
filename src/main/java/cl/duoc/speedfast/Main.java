@@ -23,8 +23,8 @@ public class Main {
             } else {
                 System.out.println("No se pudo establecer la conexión a la base de datos.");
             }
-        } catch (SQLException e) {
-            System.out.println("Error al cerrar la conexión a la base de datos: " + e.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Error al cerrar la conexión a la base de datos: " + ex.getMessage());
         }
     }
 }

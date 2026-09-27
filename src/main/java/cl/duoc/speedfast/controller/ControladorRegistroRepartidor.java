@@ -41,7 +41,6 @@ public class ControladorRegistroRepartidor {
         } catch (IllegalArgumentException e) {
             ventanaRegistroRepartidor.mostrarMensajeError(e.getMessage());
         } catch (SQLException ex) {
-            ex.printStackTrace();
             ventanaRegistroRepartidor.mostrarMensajeError("Error al guardar el repartidor en la base de datos: " + ex.getMessage());
         }
     }

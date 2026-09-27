@@ -45,7 +45,6 @@ public class ControladorRegistroPedido {
         } catch (IllegalArgumentException e) {
             ventanaRegistroPedido.mostrarMensajeError(e.getMessage());
         } catch (SQLException ex) {
-            ex.printStackTrace();
             ventanaRegistroPedido.mostrarMensajeError("Error al guardar el pedido en la base de datos: " + ex.getMessage());
         }
     }
