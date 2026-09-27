@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.model.dao;
 
-import cl.duoc.speedfast.config.ConexionBD;
+import cl.duoc.speedfast.database.ConexionBD;
 import cl.duoc.speedfast.model.entity.Entrega;
 
 import java.sql.*;

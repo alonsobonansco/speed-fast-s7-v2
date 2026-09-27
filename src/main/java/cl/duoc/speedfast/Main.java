@@ -1,6 +1,6 @@
 package cl.duoc.speedfast;
 
-import cl.duoc.speedfast.config.ConexionBD;
+import cl.duoc.speedfast.database.ConexionBD;
 import cl.duoc.speedfast.controller.ControladorPrincipal;
 import cl.duoc.speedfast.view.VentanaPrincipal;
 
