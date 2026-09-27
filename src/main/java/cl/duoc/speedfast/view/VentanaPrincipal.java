@@ -2,15 +2,23 @@ package cl.duoc.speedfast.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaPrincipal extends JFrame {
 
-    private JButton registrarPedidoButton;
-    private JButton listarPedidosButton;
-    private JButton iniciarEntregasButton;
     private JLabel tituloLabel;
     private JTextArea logTextArea;
+
+    private JMenuItem itemRegistrarPedido;
+    private JMenuItem itemListarPedidos;
+    private JMenuItem itemRegistrarRepartidor;
+    private JMenuItem itemListarRepartidores;
+    private JMenuItem itemRegistrarEntrega;
+    private JMenuItem itemListarEntregas;
+    private JMenu menuIniciarRepartos;
 
     public VentanaPrincipal() {
         setTitle("SpeedFast App");
@@ -21,6 +29,7 @@ public class VentanaPrincipal extends JFrame {
         setResizable(false);
 
         inicializarComponentes();
+        inicializarMenuBar();
         construirLayout();
     }
 
@@ -29,68 +38,53 @@ public class VentanaPrincipal extends JFrame {
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 20));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
 
-        registrarPedidoButton = new JButton("Registrar Pedido");
-        listarPedidosButton = new JButton("Listar Pedidos");
-        iniciarEntregasButton = new JButton("Iniciar Entregas");
-
-        Font fuenteBotones = new Font("Arial", Font.BOLD, 15);
-        registrarPedidoButton.setFont(fuenteBotones);
-        listarPedidosButton.setFont(fuenteBotones);
-        iniciarEntregasButton.setFont(fuenteBotones);
-
-        Dimension botonDimension = new Dimension(200, 40);
-        registrarPedidoButton.setPreferredSize(botonDimension);
-        listarPedidosButton.setPreferredSize(botonDimension);
-        iniciarEntregasButton.setPreferredSize(botonDimension);
-
         logTextArea = new JTextArea();
         logTextArea.setEditable(false);
         logTextArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
     }
 
     private void construirLayout() {
-        JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridBagLayout());
-        panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 0));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridy = 0;
-
-        gbc.gridx = 0;
-        panelBotones.add(registrarPedidoButton, gbc);
-
-        gbc.gridx = 1;
-        panelBotones.add(listarPedidosButton, gbc);
-
-        gbc.gridx = 2;
-        panelBotones.add(iniciarEntregasButton, gbc);
-
-        JPanel panelSuperior = new JPanel(new BorderLayout());
-        panelSuperior.add(tituloLabel, BorderLayout.NORTH);
-        panelSuperior.add(panelBotones, BorderLayout.CENTER);
+        add(tituloLabel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(logTextArea);
-        scrollPane.setPreferredSize(new Dimension(0, 320));
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JPanel panelInferior = new JPanel(new BorderLayout());
-        panelInferior.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
-        panelInferior.add(scrollPane, BorderLayout.CENTER);
+        JPanel panelCentralLog = new JPanel(new BorderLayout());
+        panelCentralLog.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
+        panelCentralLog.add(scrollPane, BorderLayout.CENTER);
 
-        add(panelSuperior, BorderLayout.NORTH);
-        add(panelInferior, BorderLayout.CENTER);
+        add(panelCentralLog, BorderLayout.CENTER);
     }
 
-    public void addRegistrarPedidoListener(ActionListener listener) {
-        registrarPedidoButton.addActionListener(listener);
-    }
+    private void inicializarMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
 
-    public void addListarPedidosListener(ActionListener listener) {
-        listarPedidosButton.addActionListener(listener);
-    }
+        JMenu menuPedidos = new JMenu("Pedidos");
+        itemRegistrarPedido = new JMenuItem("Registrar Pedido");
+        itemListarPedidos = new JMenuItem("Listar Pedidos");
+        menuPedidos.add(itemRegistrarPedido);
+        menuPedidos.add(itemListarPedidos);
 
-    public void addIniciarEntregasListener(ActionListener listener) {
-        iniciarEntregasButton.addActionListener(listener);
+        JMenu menuRepartidores = new JMenu("Repartidores");
+        itemRegistrarRepartidor = new JMenuItem("Registrar Repartidor");
+        itemListarRepartidores = new JMenuItem("Listar Repartidores");
+        menuRepartidores.add(itemRegistrarRepartidor);
+        menuRepartidores.add(itemListarRepartidores);
+
+        JMenu menuEntregas = new JMenu("Entregas");
+        itemRegistrarEntrega = new JMenuItem("Asignar Entrega a Repartidor");
+        itemListarEntregas = new JMenuItem("Listar Entregas");
+        menuEntregas.add(itemRegistrarEntrega);
+        menuEntregas.add(itemListarEntregas);
+
+        menuIniciarRepartos = new JMenu("Iniciar Repartos");
+
+        menuBar.add(menuPedidos);
+        menuBar.add(menuRepartidores);
+        menuBar.add(menuEntregas);
+        menuBar.add(menuIniciarRepartos);
+
+        setJMenuBar(menuBar);
     }
 
     public void appendLog(String mensaje) {
@@ -103,6 +97,41 @@ public class VentanaPrincipal extends JFrame {
     public void clearLog() {
         javax.swing.SwingUtilities.invokeLater(() -> {
             logTextArea.setText("");
+        });
+    }
+
+    public void addRegistrarPedidoMenuListener(ActionListener listener) {
+        itemRegistrarPedido.addActionListener(listener);
+    }
+
+    public void addListarPedidosMenuListener(ActionListener listener) {
+        itemListarPedidos.addActionListener(listener);
+    }
+
+    public void addRegistrarRepartidorMenuListener(ActionListener listener) {
+        itemRegistrarRepartidor.addActionListener(listener);
+    }
+
+    public void addListarRepartidoresMenuListener(ActionListener listener) {
+        itemListarRepartidores.addActionListener(listener);
+    }
+
+    public void addRegistrarEntregaMenuListener(ActionListener listener) {
+        itemRegistrarEntrega.addActionListener(listener);
+    }
+
+    public void addListarEntregasMenuListener(ActionListener listener) {
+        itemListarEntregas.addActionListener(listener);
+    }
+
+    public void addIniciarRepartosMenuListener(ActionListener listener) {
+        menuIniciarRepartos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    listener.actionPerformed(new ActionEvent(menuIniciarRepartos, ActionEvent.ACTION_PERFORMED, ""));
+                }
+            }
         });
     }
 }

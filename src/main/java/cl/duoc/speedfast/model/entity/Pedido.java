@@ -1,34 +1,35 @@
-package cl.duoc.speedfast.model;
+package cl.duoc.speedfast.model.entity;
 
-public abstract class Pedido implements Cancelable {
+public class Pedido {
 
     private final TipoPedido tipoPedido;
     private final int idPedido;
     private String direccionEntrega;
-    private boolean pedidoActivo = true;
     private EstadoPedido estadoPedido = EstadoPedido.PENDIENTE;
 
-    public Pedido(TipoPedido tipoPedido, int idPedido, String direccionEntrega) {
+    public Pedido(int idPedido, String direccionEntrega, TipoPedido tipoPedido) {
         if (idPedido <= 0) {
             throw new IllegalArgumentException("El ID del pedido debe ser válido.");
         }
 
-        this.tipoPedido = tipoPedido;
+        this.tipoPedido = validarTipoPedido(tipoPedido);
         this.idPedido = idPedido;
         setDireccionEntrega(direccionEntrega);
     }
 
-    @Override
-    public void cancelar() {
-        if (!pedidoActivo) {
-            return;
-        }
-
-        pedidoActivo = false;
-        estadoPedido = EstadoPedido.CANCELADO;
+    public Pedido(TipoPedido tipoPedido, String direccionEntrega) {
+        this.tipoPedido = validarTipoPedido(tipoPedido);
+        this.idPedido = 0;
+        setDireccionEntrega(direccionEntrega);
     }
 
-    public abstract boolean validarPedido();
+    private TipoPedido validarTipoPedido(TipoPedido tipoPedido) {
+        if (tipoPedido == null) {
+            throw new IllegalArgumentException("El tipo de pedido no puede ser nulo.");
+        }
+
+        return tipoPedido;
+    }
 
     public TipoPedido getTipoPedido() {
         return tipoPedido;
@@ -46,7 +47,8 @@ public abstract class Pedido implements Cancelable {
         if (direccionEntrega == null || direccionEntrega.isBlank()) {
             throw new IllegalArgumentException("La dirección de entrega debe ser válida.");
         }
-        this.direccionEntrega = direccionEntrega;
+
+        this.direccionEntrega = direccionEntrega.trim();
     }
 
     public EstadoPedido getEstadoPedido() {
@@ -54,8 +56,15 @@ public abstract class Pedido implements Cancelable {
     }
 
     public void setEstadoPedido(EstadoPedido estadoPedido) {
+        if (estadoPedido == null) {
+            throw new IllegalArgumentException("El estado del pedido no puede ser nulo.");
+        }
+
         this.estadoPedido = estadoPedido;
     }
 
-    public abstract String getDetalleEspecifico();
+    @Override
+    public String toString() {
+        return "Pedido #" + idPedido + " - " + direccionEntrega;
+    }
 }

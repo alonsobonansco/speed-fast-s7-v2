@@ -4,15 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class VentanaRegistroPedido extends JFrame {
+public class VentanaRegistroRepartidor extends JFrame {
 
     private JLabel tituloLabel;
-    private JTextField direccionTextField;
-    private JComboBox<String> tipoComboBox;
+    private JTextField nombreTextField;
     private JButton guardarButton;
     private JButton atrasButton;
 
-    public VentanaRegistroPedido() {
+    public VentanaRegistroRepartidor() {
         setTitle("SpeedFast App");
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -25,14 +24,11 @@ public class VentanaRegistroPedido extends JFrame {
     }
 
     private void inicializarComponentes() {
-        tituloLabel = new JLabel("Formulario de Registro de Pedidos", SwingConstants.CENTER);
+        tituloLabel = new JLabel("Formulario de Registro de Repartidores", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
 
-        direccionTextField = new JTextField(15);
-
-        String[] tipos = {"Comida", "Encomienda", "Express"};
-        tipoComboBox = new JComboBox<>(tipos);
+        nombreTextField = new JTextField(20);
 
         guardarButton = new JButton("Guardar");
         atrasButton = new JButton("Atrás");
@@ -41,54 +37,43 @@ public class VentanaRegistroPedido extends JFrame {
     private void construirLayout() {
         add(tituloLabel, BorderLayout.NORTH);
 
+        // Diseñamos un contenedor central espacioso para el campo de texto
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 15, 15, 15);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        Font fuenteCampos = new Font("Arial", Font.PLAIN, 14);
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridy = 0;
 
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        JLabel direccionLabel = new JLabel("Dirección de Entrega:");
-        direccionLabel.setFont(fuenteCampos);
-        panelFormulario.add(direccionLabel, gbc);
+        JLabel nombreLabel = new JLabel("Nombre del Repartidor:");
+        nombreLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelFormulario.add(nombreLabel, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        direccionTextField.setFont(fuenteCampos);
-        panelFormulario.add(direccionTextField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        JLabel tipoLabel = new JLabel("Tipo de Pedido:");
-        tipoLabel.setFont(fuenteCampos);
-        panelFormulario.add(tipoLabel, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        tipoComboBox.setFont(fuenteCampos);
-        panelFormulario.add(tipoComboBox, gbc);
+        nombreTextField.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelFormulario.add(nombreTextField, gbc);
 
         add(panelFormulario, BorderLayout.CENTER);
 
+        // Panel inferior para los botones de acción
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         panelBotones.add(guardarButton);
         panelBotones.add(atrasButton);
+
         add(panelBotones, BorderLayout.SOUTH);
     }
 
-    public String getDireccionEntrega() {
-        return direccionTextField.getText().trim();
-    }
-
-    public String getTipoPedido() {
-        return (String) tipoComboBox.getSelectedItem();
+    public String getNombreRepartidor() {
+        return nombreTextField.getText().trim();
     }
 
     public void cerrarVentana() {
-        this.dispose();
+        dispose();
+    }
+
+    public void limpiarFormulario() {
+        nombreTextField.setText("");
     }
 
     public void addGuardarListener(ActionListener listener) {
@@ -100,14 +85,10 @@ public class VentanaRegistroPedido extends JFrame {
     }
 
     public void mostrarMensajeConfirmacion(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Pedido registrado", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, mensaje, "Repartidor registrado", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void mostrarMensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void limpiarFormulario() {
-        direccionTextField.setText("");
     }
 }

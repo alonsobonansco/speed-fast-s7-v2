@@ -1,7 +1,7 @@
-package cl.duoc.speedfast.model;
+package cl.duoc.speedfast.model.entity;
 
 public enum EstadoPedido {
     PENDIENTE,
-    CANCELADO,
+    EN_REPARTO,
     ENTREGADO
 }

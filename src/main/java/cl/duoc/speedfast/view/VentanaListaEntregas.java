@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.view;
 
-import cl.duoc.speedfast.model.entity.Pedido;
+import cl.duoc.speedfast.model.entity.Entrega;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -8,14 +8,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class VentanaListaPedidos extends JFrame {
+public class VentanaListaEntregas extends JFrame {
 
     private JLabel tituloLabel;
-    private JTable pedidosTable;
+    private JTable entregasTable;
     private DefaultTableModel tablaModel;
     private JButton atrasButton;
 
-    public VentanaListaPedidos() {
+    public VentanaListaEntregas() {
         setTitle("SpeedFast App");
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -28,11 +28,11 @@ public class VentanaListaPedidos extends JFrame {
     }
 
     private void inicializarComponentes() {
-        tituloLabel = new JLabel("Lista de Pedidos Registrados", SwingConstants.CENTER);
+        tituloLabel = new JLabel("Historial de Entregas Registradas", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
 
-        String[] columnas = {"ID Pedido", "Dirección Entrega", "Tipo Pedido", "Estado Pedido"};
+        String[] columnas = {"ID Entrega", "ID Pedido", "ID Repartidor", "Fecha", "Hora"};
         tablaModel = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -40,21 +40,18 @@ public class VentanaListaPedidos extends JFrame {
             }
         };
 
-        pedidosTable = new JTable(tablaModel);
-        pedidosTable.getTableHeader().setReorderingAllowed(false);
+        entregasTable = new JTable(tablaModel);
+        entregasTable.getTableHeader().setReorderingAllowed(false);
 
         atrasButton = new JButton("Atrás");
     }
 
-    public void construirLayout() {
+    private void construirLayout() {
         add(tituloLabel, BorderLayout.NORTH);
-
-        JScrollPane scrollPane = new JScrollPane(pedidosTable);
-
+        JScrollPane scrollPane = new JScrollPane(entregasTable);
         JPanel panelTabla = new JPanel(new BorderLayout());
         panelTabla.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         panelTabla.add(scrollPane, BorderLayout.CENTER);
-
         add(panelTabla, BorderLayout.CENTER);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
@@ -70,17 +67,17 @@ public class VentanaListaPedidos extends JFrame {
         this.dispose();
     }
 
-    public void actualizarTabla(List<Pedido> listaPedidos) {
+    public void actualizarTabla(List<Entrega> listaEntregas) {
         tablaModel.setRowCount(0);
 
-        for (Pedido p : listaPedidos) {
+        for (Entrega e : listaEntregas) {
             Object[] fila = {
-                    p.getIdPedido(),
-                    p.getDireccionEntrega(),
-                    p.getTipoPedido(),
-                    p.getEstadoPedido()
+                    e.getIdEntrega(),
+                    e.getIdPedido(),
+                    e.getIdRepartidor(),
+                    e.getFecha(),
+                    e.getHora()
             };
-
             tablaModel.addRow(fila);
         }
     }

@@ -1,6 +1,6 @@
 package cl.duoc.speedfast.view;
 
-import cl.duoc.speedfast.model.entity.Pedido;
+import cl.duoc.speedfast.model.entity.Repartidor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -8,14 +8,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class VentanaListaPedidos extends JFrame {
+public class VentanaListaRepartidores extends JFrame {
 
     private JLabel tituloLabel;
-    private JTable pedidosTable;
+    private JTable repartidoresTable;
     private DefaultTableModel tablaModel;
     private JButton atrasButton;
 
-    public VentanaListaPedidos() {
+    public VentanaListaRepartidores() {
         setTitle("SpeedFast App");
         setSize(700, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -28,11 +28,11 @@ public class VentanaListaPedidos extends JFrame {
     }
 
     private void inicializarComponentes() {
-        tituloLabel = new JLabel("Lista de Pedidos Registrados", SwingConstants.CENTER);
+        tituloLabel = new JLabel("Lista de Repartidores", SwingConstants.CENTER);
         tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
         tituloLabel.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
 
-        String[] columnas = {"ID Pedido", "Dirección Entrega", "Tipo Pedido", "Estado Pedido"};
+        String[] columnas = {"ID Repartidor", "Nombre Repartidor"};
         tablaModel = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -40,8 +40,8 @@ public class VentanaListaPedidos extends JFrame {
             }
         };
 
-        pedidosTable = new JTable(tablaModel);
-        pedidosTable.getTableHeader().setReorderingAllowed(false);
+        repartidoresTable = new JTable(tablaModel);
+        repartidoresTable.getTableHeader().setReorderingAllowed(false);
 
         atrasButton = new JButton("Atrás");
     }
@@ -49,7 +49,7 @@ public class VentanaListaPedidos extends JFrame {
     public void construirLayout() {
         add(tituloLabel, BorderLayout.NORTH);
 
-        JScrollPane scrollPane = new JScrollPane(pedidosTable);
+        JScrollPane scrollPane = new JScrollPane(repartidoresTable);
 
         JPanel panelTabla = new JPanel(new BorderLayout());
         panelTabla.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
@@ -70,15 +70,13 @@ public class VentanaListaPedidos extends JFrame {
         this.dispose();
     }
 
-    public void actualizarTabla(List<Pedido> listaPedidos) {
+    public void actualizarTabla(List<Repartidor> listaRepartidores) {
         tablaModel.setRowCount(0);
 
-        for (Pedido p : listaPedidos) {
+        for (Repartidor r : listaRepartidores) {
             Object[] fila = {
-                    p.getIdPedido(),
-                    p.getDireccionEntrega(),
-                    p.getTipoPedido(),
-                    p.getEstadoPedido()
+                    r.getIdRepartidor(),
+                    r.getNombreRepartidor()
             };
 
             tablaModel.addRow(fila);
