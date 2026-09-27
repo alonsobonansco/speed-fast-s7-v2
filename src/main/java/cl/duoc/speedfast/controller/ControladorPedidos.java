@@ -1,8 +1,10 @@
 package cl.duoc.speedfast.controller;
 
 import cl.duoc.speedfast.event.LogListener;
+import cl.duoc.speedfast.model.dao.EntregaDAO;
 import cl.duoc.speedfast.model.dao.PedidoDAO;
 import cl.duoc.speedfast.model.dao.RepartidorDAO;
+import cl.duoc.speedfast.model.entity.Entrega;
 import cl.duoc.speedfast.model.entity.EstadoPedido;
 import cl.duoc.speedfast.model.entity.Pedido;
 import cl.duoc.speedfast.service.Repartidor;
@@ -18,6 +20,8 @@ public class ControladorPedidos {
     private final BlockingQueue<Pedido> pedidosPendientes = new LinkedBlockingQueue<>();
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
+    private final EntregaDAO entregaDAO = new EntregaDAO();
+    private List<Pedido> listaPedidosEnSimulacion;
     private LogListener logListener;
     private int repartidoresActivos = 0;
 
@@ -42,18 +46,20 @@ public class ControladorPedidos {
             return;
         }
 
-        pedidosPendientes.clear();
+        this.listaPedidosEnSimulacion = listaPedidos;
 
-       for (Pedido p : listaPedidos) {
-           if (p.getEstadoPedido() == EstadoPedido.PENDIENTE || p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
+        //pedidosPendientes.clear();
+
+       /*for (Pedido p : listaPedidos) {
+           if (p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
                agregarPedido(p);
            }
        }
 
         if (pedidosPendientes.isEmpty()) {
-            escribirMensaje("[AVISO] No quedan pedidos pendientes por entregar.");
+            escribirMensaje("[AVISO] No hay pedidos asignados en preparación.");
             return;
-        }
+        }*/
 
         escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE DESDE BASE DE DATOS --- ");
 
@@ -86,8 +92,32 @@ public class ControladorPedidos {
         ));
     }
 
-    public Pedido retirarPedido() {
-        return pedidosPendientes.poll();
+    public synchronized Pedido retirarPedidoPorRepartidor(int idRepartidor) {
+        try {
+            List<Entrega> listaEntregas = entregaDAO.listarTodos();
+
+            for (Pedido p : listaPedidosEnSimulacion) {
+                if (p.getEstadoPedido() == EstadoPedido.EN_REPARTO) {
+
+                    for (Entrega e : listaEntregas) {
+
+                        if (e.getIdPedido() == p.getIdPedido() && e.getIdRepartidor() == idRepartidor) {
+
+                            p.setEstadoPedido(EstadoPedido.ENTREGADO);
+                            return p;
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            escribirMensaje("[ERROR] Error al retirar el pedido: " + ex.getMessage());
+        }
+
+
+        return null;
+        //return pedidosPendientes.poll();
     }
 
     public synchronized void finalizarSimulacion() {

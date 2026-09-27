@@ -49,7 +49,7 @@ public class Repartidor implements Runnable {
     @Override
     public void run() {
         while (true) {
-            Pedido pedido = controladorPedidos.retirarPedido();
+            Pedido pedido = controladorPedidos.retirarPedidoPorRepartidor(this.idRepartidor);
 
             if (pedido == null) {
                 break;
