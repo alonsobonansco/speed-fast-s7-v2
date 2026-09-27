@@ -1,11 +1,10 @@
 package cl.duoc.speedfast.model.entity;
 
-public class Pedido implements Cancelable {
+public class Pedido {
 
     private final TipoPedido tipoPedido;
     private final int idPedido;
     private String direccionEntrega;
-    private boolean pedidoActivo = true;
     private EstadoPedido estadoPedido = EstadoPedido.PENDIENTE;
 
     public Pedido(int idPedido, String direccionEntrega, TipoPedido tipoPedido) {
@@ -23,16 +22,6 @@ public class Pedido implements Cancelable {
         this.idPedido = 0; // Se asignará un ID más adelante
         setDireccionEntrega(direccionEntrega);
 
-    }
-
-    @Override
-    public void cancelar() {
-        if (!pedidoActivo) {
-            return;
-        }
-
-        pedidoActivo = false;
-        //estadoPedido = EstadoPedido.CANCELADO;
     }
 
     public TipoPedido getTipoPedido() {

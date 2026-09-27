@@ -6,7 +6,6 @@ import cl.duoc.speedfast.view.VentanaPrincipal;
 
 import javax.swing.*;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 public class Main {
@@ -18,7 +17,6 @@ public class Main {
             ventanaPrincipal.setVisible(true);
         });
 
-        DatabaseMetaData DatabaseConnection;
         try (Connection connection = ConexionBD.obtenerConexion()) {
             if (connection != null) {
                 System.out.println("Conexión a la base de datos establecida correctamente.");
