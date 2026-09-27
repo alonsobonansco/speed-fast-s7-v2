@@ -18,11 +18,10 @@ public class ControladorRepartoPedidos {
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
     private final EntregaDAO entregaDAO = new EntregaDAO();
+    private final VentanaPrincipal ventanaPrincipal;
     private List<Pedido> listaPedidosEnSimulacion;
     private LogListener logListener;
     private int repartidoresActivos = 0;
-
-    private final VentanaPrincipal ventanaPrincipal;
 
     public ControladorRepartoPedidos(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
@@ -48,10 +47,6 @@ public class ControladorRepartoPedidos {
             return;
         }
 
-        this.listaPedidosEnSimulacion = listaPedidos;
-
-        escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE DESDE BASE DE DATOS --- ");
-
         try {
             List<Repartidor> listaRepartidores = repartidorDAO.listarTodos();
 
@@ -61,13 +56,22 @@ public class ControladorRepartoPedidos {
                 return;
             }
 
+            if (listaPedidos.stream().noneMatch(p -> p.getEstadoPedido() == EstadoPedido.EN_REPARTO)) {
+                escribirMensaje("[AVISO] No hay pedidos asignados para entregar.");
+                habilitarInicioSimulacion();
+                return;
+            }
+
+            this.listaPedidosEnSimulacion = listaPedidos;
+
+            escribirMensaje("\n --- INICIANDO REPARTO CONCURRENTE DESDE BASE DE DATOS --- ");
+
             repartidoresActivos = listaRepartidores.size();
 
             for (Repartidor r : listaRepartidores) {
                 r.setControladorPedidos(this);
 
-                Thread hiloRepartidor = new Thread(r);
-                hiloRepartidor.start();
+                new Thread(r).start();
             }
 
         } catch (SQLException ex) {

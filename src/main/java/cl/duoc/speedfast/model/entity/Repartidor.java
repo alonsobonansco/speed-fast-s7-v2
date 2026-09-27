@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import static cl.duoc.speedfast.model.entity.EstadoPedido.ENTREGADO;
-import static cl.duoc.speedfast.model.entity.EstadoPedido.EN_REPARTO;
 
 public class Repartidor implements Runnable {
 

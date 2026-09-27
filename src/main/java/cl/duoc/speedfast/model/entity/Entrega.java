@@ -18,7 +18,7 @@ public class Entrega {
         if (idRepartidor <= 0) {
             throw new IllegalArgumentException("El ID del repartidor debe ser válido.");
         }
-        if  (fecha == null) {
+        if (fecha == null) {
             throw new IllegalArgumentException("La fecha no puede ser nula.");
         }
         if (hora == null) {
