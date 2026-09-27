@@ -1,11 +1,11 @@
 package cl.duoc.speedfast.view;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -125,18 +125,15 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void addIniciarRepartosMenuListener(ActionListener listener) {
-            menuIniciarRepartos.addMenuListener(new MenuListener() {
-                @Override
-                public void menuSelected(MenuEvent e) {
+        menuIniciarRepartos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
                     listener.actionPerformed(new ActionEvent(menuIniciarRepartos, ActionEvent.ACTION_PERFORMED, ""));
                 }
-
-                @Override
-                public void menuDeselected(MenuEvent e) {}
-                @Override
-                public void menuCanceled(MenuEvent e) {}
-            });
-        }
+            }
+        });
     }
+}
 
 
