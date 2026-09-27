@@ -30,7 +30,13 @@ public class EntregaDAO {
                 pstmtEntrega.executeUpdate();
 
                 pstmtPedido.setInt(1, entrega.getIdPedido());
-                pstmtPedido.executeUpdate();
+
+                // Validación de integridad en la capa de persistencia
+                int filasAfectadas = pstmtPedido.executeUpdate();
+
+                if (filasAfectadas == 0) {
+                    throw new SQLException("No se actualizó ningún pedido");
+                }
 
                 conn.commit();
             }
