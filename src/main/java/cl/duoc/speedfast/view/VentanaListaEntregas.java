@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Interfaz gráfica encargada de desplegar el registro histórico de asignaciones de entregas.
+ * Incorpora un componente JTable no editable para la visualización segura de los registros de MySQL.
+ */
 public class VentanaListaEntregas extends JFrame {
 
     private JLabel tituloLabel;

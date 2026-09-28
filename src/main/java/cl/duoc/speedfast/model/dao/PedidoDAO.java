@@ -12,8 +12,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de Acceso a Datos (DAO) encargada de centralizar las operaciones de persistencia,
+ * inserción, actualización y lectura de la entidad Pedido físicamente en la base de datos MySQL.
+ */
 public class PedidoDAO {
 
+    /**
+     * Inserta un nuevo registro de pedido en la base de datos mapeando los Enums correspondientes.
+     *
+     * @param pedido Objeto entidad que contiene los datos del despacho a registrar.
+     * @throws SQLException Si ocurre un error de comunicación o restricciones sintácticas en MySQL.
+     */
     public void guardar(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedido (direccion, tipo, estado) VALUES (?, ?, ?)";
 
@@ -28,6 +38,13 @@ public class PedidoDAO {
         }
     }
 
+    /**
+     * Extrae la lista completa histórica de todos los pedidos almacenados en la base de datos,
+     * transformando los textos VARCHAR de vuelta a sus Enums tipados en Java.
+     *
+     * @return Una {@link List} que contiene todos los objetos Pedido encontrados.
+     * @throws SQLException Si falla la ejecución de la consulta de lectura en MySQL.
+     */
     public List<Pedido> listarTodos() throws SQLException {
         List<Pedido> listaPedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido";
@@ -56,6 +73,13 @@ public class PedidoDAO {
         return listaPedidos;
     }
 
+    /**
+     * Recupera exclusivamente los registros de pedidos que se encuentran en estado 'PENDIENTE'
+     * para abastecer dinámicamente los componentes visuales de asignación.
+     *
+     * @return Una {@link List} con los objetos Pedido aptos para ser asignados en ruta.
+     * @throws SQLException Si ocurre una falla en el filtro de lectura en MySQL.
+     */
     public List<Pedido> listarPendientes() throws SQLException {
         List<Pedido> listaPendientes = new ArrayList<>();
 
@@ -85,6 +109,13 @@ public class PedidoDAO {
         return listaPendientes;
     }
 
+    /**
+     * Modifica de manera directa el estado de un registro de pedido utilizando tipado fuerte de Enum.
+     *
+     * @param idPedido    ID único correlativo del pedido a modificar.
+     * @param nuevoEstado Siguiente estado del flujo de negocio (EN_REPARTO, ENTREGADO).
+     * @throws SQLException Si falla la ejecución del comando UPDATE en el motor relacional.
+     */
     public void actualizarEstado(int idPedido, EstadoPedido nuevoEstado) throws SQLException {
         String sql = "UPDATE pedido SET estado = ? WHERE id = ?";
 

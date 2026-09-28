@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Interfaz gráfica encargada de proveer el formulario de ingreso para nuevos repartidores.
+ * Incorpora componentes de texto y un diseño basado en GridBagLayout para garantizar la simetría visual.
+ */
 public class VentanaRegistroRepartidor extends JFrame {
 
     private JLabel tituloLabel;
@@ -62,6 +66,12 @@ public class VentanaRegistroRepartidor extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
     }
 
+    /**
+     * Recupera y sanitiza el texto ingresado en el campo del nombre del repartidor,
+     * removiendo los espacios en blanco innecesarios en los extremos.
+     *
+     * @return El nombre del repartidor ingresado como una cadena de texto plano.
+     */
     public String getNombreRepartidor() {
         return nombreTextField.getText().trim();
     }

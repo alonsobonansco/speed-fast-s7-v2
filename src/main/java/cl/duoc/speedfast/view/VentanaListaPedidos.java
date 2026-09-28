@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Interfaz gráfica encargada de desplegar el listado histórico de los pedidos.
+ * Incorpora un componente JTable no editable para la visualización segura de los registros de MySQL.
+ */
 public class VentanaListaPedidos extends JFrame {
 
     private JLabel tituloLabel;

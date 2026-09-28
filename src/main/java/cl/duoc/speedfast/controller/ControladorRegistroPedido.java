@@ -7,11 +7,21 @@ import cl.duoc.speedfast.view.VentanaRegistroPedido;
 
 import java.sql.SQLException;
 
+/**
+ * Controlador especializado encargado de gestionar el flujo del formulario de ingreso de pedidos.
+ * Captura los datos de la interfaz visual, los transforma en la entidad correspondiente y los persiste en MySQL.
+ */
 public class ControladorRegistroPedido {
 
     private final VentanaRegistroPedido ventanaRegistroPedido;
     private final PedidoDAO pedidoDAO = new PedidoDAO();
 
+    /**
+     * Constructor principal que enlaza el formulario de ingreso de datos
+     * y activa de forma reactiva la suscripción de los botones Guardar y Atrás.
+     *
+     * @param ventanaRegistroPedido Instancia activa del formulario visual de nuevo pedido.
+     */
     public ControladorRegistroPedido(VentanaRegistroPedido ventanaRegistroPedido) {
         this.ventanaRegistroPedido = ventanaRegistroPedido;
 

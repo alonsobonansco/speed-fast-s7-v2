@@ -7,8 +7,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de Acceso a Datos (DAO) encargada de centralizar la persistencia,
+ * lectura histórica e inserciones transaccionales de las Entregas en la base de datos MySQL.
+ */
 public class EntregaDAO {
 
+    /**
+     * Inserta un registro de entrega y actualiza el estado del pedido de forma atómica.
+     * Utiliza una transacción manual (commit/rollback) para garantizar la integridad referencial.
+     *
+     * @param entrega Objeto entidad que contiene las llaves foráneas y marcas de tiempo a registrar.
+     * @throws SQLException Si falla alguna consulta, si no se afectan filas, o si se gatilla un Rollback en MySQL.
+     */
     public void guardar(Entrega entrega) throws SQLException {
         String sqlEntrega = "INSERT INTO entrega (id_pedido, id_repartidor, fecha, hora) VALUES (?, ?, ?, ?)";
         String sqlPedido = "UPDATE pedido SET estado = 'EN_REPARTO' WHERE id = ?";
@@ -55,6 +66,13 @@ public class EntregaDAO {
         }
     }
 
+    /**
+     * Extrae el historial plano completo de todas las asignaciones de entregas registradas en MySQL.
+     * Mapea de forma directa las fechas y horas a los tipos modernos de java.time.
+     *
+     * @return Una {@link List} que contiene los objetos Entrega estructurados.
+     * @throws SQLException Si ocurre un error durante el escaneo del ResultSet en MySQL.
+     */
     public List<Entrega> listarTodos() throws SQLException {
         List<Entrega> listaEntregas = new ArrayList<>();
         String sql = "SELECT * FROM entrega";

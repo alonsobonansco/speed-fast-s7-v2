@@ -10,8 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de Acceso a Datos (DAO) encargada de centralizar las operaciones de persistencia,
+ * inserción y lectura de la entidad Repartidor físicamente en la base de datos MySQL.
+ */
 public class RepartidorDAO {
 
+    /**
+     * Inserta un nuevo registro de repartidor en el motor de base de datos relacional.
+     *
+     * @param repartidor Objeto entidad que contiene los datos del trabajador a registrar.
+     * @throws SQLException Si ocurre un error de comunicación, sintaxis o restricciones en MySQL.
+     */
     public void guardar(Repartidor repartidor) throws SQLException {
         String sql = "INSERT INTO repartidor (nombre) VALUES (?)";
 
@@ -25,6 +35,13 @@ public class RepartidorDAO {
 
     }
 
+    /**
+     * Extrae la lista completa y actualizada de todos los repartidores almacenados en la base de datos.
+     * Reconstruye los registros relacionales transformándolos en instancias de la entidad Java.
+     *
+     * @return Una {@link List} que contiene los objetos Repartidor encontrados en el sistema.
+     * @throws SQLException Si falla la ejecución de la consulta de lectura en MySQL.
+     */
     public List<Repartidor> listarTodos() throws SQLException {
         List<Repartidor> listaRepartidores = new ArrayList<>();
         String sql = "SELECT * FROM repartidor";

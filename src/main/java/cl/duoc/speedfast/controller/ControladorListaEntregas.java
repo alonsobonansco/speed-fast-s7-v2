@@ -8,12 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador especializado encargado de gestionar el flujo de la pantalla de historial de entregas.
+ * Recupera de forma segura las asignaciones desde MySQL y alimenta de forma reactiva la tabla visual.
+ */
 public class ControladorListaEntregas {
 
     private final VentanaListaEntregas ventanaListaEntregas;
     private final EntregaDAO entregaDAO = new EntregaDAO();
     private List<Entrega> listaEntregas;
 
+    /**
+     * Constructor principal encargado de enlazar la ventana de historial, activar el botón de retorno,
+     * y gatillar la lectura atómica de persistencia para pintar los registros en caliente en la interfaz.
+     *
+     * @param ventanaListaEntregas Instancia activa de la ventana visual con el JTable de entregas.
+     */
     public ControladorListaEntregas(VentanaListaEntregas ventanaListaEntregas) {
         this.ventanaListaEntregas = ventanaListaEntregas;
 
