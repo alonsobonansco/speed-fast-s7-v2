@@ -13,6 +13,10 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Controlador especializado encargado de gestionar el flujo del formulario de asignación manual.
+ * Coordina la carga dinámica de JComboBoxes desde MySQL y procesa la vinculación transaccional.
+ */
 public class ControladorRegistroEntrega {
 
     private final VentanaRegistroEntrega ventanaRegistroEntrega;
@@ -20,6 +24,12 @@ public class ControladorRegistroEntrega {
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final RepartidorDAO repartidorDAO = new RepartidorDAO();
 
+    /**
+     * Constructor principal que enlaza el formulario de asignación, gatilla los listeners
+     * de los botones y pobla los componentes gráficos consultando de forma inicial los DAOs.
+     *
+     * @param ventanaRegistroEntrega Instancia activa del formulario visual de asignación.
+     */
     public ControladorRegistroEntrega(VentanaRegistroEntrega ventanaRegistroEntrega) {
         this.ventanaRegistroEntrega = ventanaRegistroEntrega;
         inicializarListeners();

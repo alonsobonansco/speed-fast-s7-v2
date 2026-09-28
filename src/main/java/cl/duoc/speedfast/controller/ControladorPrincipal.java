@@ -7,6 +7,11 @@ import cl.duoc.speedfast.view.*;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Orquestador maestro de la capa de control de la suite SpeedFast.
+ * Aplica el patrón Controlador Centralizado (Front Controller) para coordinar
+ * la navegación de las subtareas visuales y activar el módulo concurrente.
+ */
 public class ControladorPrincipal {
 
     private final VentanaPrincipal ventanaPrincipal;
@@ -21,6 +26,12 @@ public class ControladorPrincipal {
 
     private ControladorRepartoPedidos controladorRepartoPedidos = null;
 
+    /**
+     * Constructor principal encargado de enlazar la ventana raíz y disparar
+     * de forma reactiva la suscripción global de eventos del menú de navegación.
+     *
+     * @param ventanaPrincipal Instancia activa del panel de control central (Vista).
+     */
     public ControladorPrincipal(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
 

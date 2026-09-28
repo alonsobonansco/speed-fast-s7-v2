@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Interfaz gráfica encargada de proveer el formulario de ingreso para nuevos pedidos.
+ * Incorpora campos de texto, un menú desplegable JComboBox y un diseño simétrico basado en GridBagLayout.
+ */
 public class VentanaRegistroPedido extends JFrame {
 
     private JLabel tituloLabel;
@@ -79,10 +83,21 @@ public class VentanaRegistroPedido extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
     }
 
+    /**
+     * Recupera y sanitiza la dirección de destino ingresada en el campo de texto,
+     * removiendo los espacios en blanco innecesarios en los extremos.
+     *
+     * @return La dirección de entrega como una cadena de texto plano.
+     */
     public String getDireccionEntrega() {
         return direccionTextField.getText().trim();
     }
 
+    /**
+     * Obtiene el tipo de servicio seleccionado en el menú desplegable de la interfaz.
+     *
+     * @return El nombre de la opción seleccionada como una cadena de texto plano.
+     */
     public String getTipoPedido() {
         return (String) tipoComboBox.getSelectedItem();
     }

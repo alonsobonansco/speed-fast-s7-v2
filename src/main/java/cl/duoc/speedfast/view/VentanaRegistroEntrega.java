@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Interfaz gráfica encargada de proveer el formulario para la asignación manual de rutas.
+ * Incorpora componentes de selección optimizados mediante peso horizontal para desplegar de forma balanceada los datos relacionales.
+ */
 public class VentanaRegistroEntrega extends JFrame {
 
     private JLabel tituloLabel;
@@ -112,11 +116,23 @@ public class VentanaRegistroEntrega extends JFrame {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Limpia el menú desplegable de selección y añade de forma secuencial
+     * los objetos Pedido vigentes que han sido recuperados desde la base de datos.
+     *
+     * @param pedidos Lista de entidades en estado PENDIENTE aptas para asignación.
+     */
     public void cargarPedidos(List<Pedido> pedidos) {
         pedidoJComboBox.removeAllItems();
         for (Pedido p : pedidos) pedidoJComboBox.addItem(p);
     }
 
+    /**
+     * Limpia el menú desplegable de selección y añade de forma secuencial
+     * los objetos Repartidor vigentes que han sido recuperados desde la base de datos.
+     *
+     * @param repartidores Lista completa de trabajadores disponibles en el sistema.
+     */
     public void cargarRepartidores(List<Repartidor> repartidores) {
         repartidorJComboBox.removeAllItems();
         for (Repartidor r : repartidores) repartidorJComboBox.addItem(r);

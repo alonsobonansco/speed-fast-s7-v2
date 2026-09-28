@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Pantalla raíz e interfaz principal del ecosistema de software SpeedFast.
+ * Provee la barra de navegación del menú global de la suite y expone un panel
+ * central inmenso con JTextArea dedicado al despliegue en tiempo real de logs hilos.
+ */
 public class VentanaPrincipal extends JFrame {
 
     private JLabel tituloLabel;
@@ -84,6 +89,12 @@ public class VentanaPrincipal extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    /**
+     * Añade de forma segura una nueva línea de log al final de la bitácora visual
+     * forzando el auto-scroll automático dentro del hilo Event Dispatch Thread (EDT).
+     *
+     * @param mensaje Cadena de texto plano o traza de simulación a estampar en la interfaz.
+     */
     public void appendLog(String mensaje) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             logTextArea.append(mensaje + "\n");
@@ -91,6 +102,10 @@ public class VentanaPrincipal extends JFrame {
         });
     }
 
+    /**
+     * Vacía por completo el contenido del panel de texto central de logs de forma
+     * asíncrona y segura respetando el hilo de refresco de Swing.
+     */
     public void clearLog() {
         javax.swing.SwingUtilities.invokeLater(() -> {
             logTextArea.setText("");
